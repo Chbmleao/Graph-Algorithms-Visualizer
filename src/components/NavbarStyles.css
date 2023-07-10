@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: white;
 }
 
 .logo {
@@ -34,6 +33,7 @@
 .nav-menu button {
   font-size: 1.3rem;
   text-decoration: none;
+  color: white;
 }
 
 .nav-menu button {
