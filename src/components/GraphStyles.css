@@ -1,0 +1,16 @@
+.graph {
+  margin: 2vw;
+  border-collapse: collapse;
+  border-spacing: 0;
+  height: 80vh;
+  width: 96vw;
+}
+
+.graph tr {
+  width: 100%;
+}
+
+.graph td {
+  border: 3px solid #ffc26f;
+  width: auto;
+}
