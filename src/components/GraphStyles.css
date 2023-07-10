@@ -4,6 +4,8 @@
   border-spacing: 0;
   height: 80vh;
   width: 96vw;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 .graph tr {
@@ -11,6 +13,8 @@
 }
 
 .graph td {
+  transition: background-color 0.5s ease, background-position 0.5s ease;
+  background-position: center center;
   border: 3px solid #ffc26f;
   width: auto;
 }
