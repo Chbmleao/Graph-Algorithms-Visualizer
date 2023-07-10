@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: white;
+}
+
+.logo {
+  width: 4rem;
+  height: auto;
+  filter: invert(98%) sepia(2%) saturate(414%) hue-rotate(181deg)
+    brightness(117%) contrast(92%);
+}
+
+.header {
+  display: flex;
+  list-style-type: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 1rem;
+  background-color: #884a39;
+  color: white;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 3rem;
+}
+
+.nav-menu li {
+  list-style: none;
+}
+
+.nav-menu button {
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+
+.nav-menu button {
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  transition: 0.3s ease;
+  padding: 0.5rem 0.8rem;
+}
+
+.nav-menu button:hover {
+  background-color: #c38154;
+  transition: 0.5s;
+}
