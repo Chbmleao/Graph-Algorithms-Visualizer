@@ -1,11 +1,11 @@
 import Navbar from "./components/Navbar";
-import Graph from "./components/Graph";
+import Table from "./components/Table";
 
 function App() {
   return (
     <div>
       <Navbar />
-      <Graph />
+      <Table />
     </div>
   );
 }
