@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import "../styles/TableStyles.css";
+import Graph from "./Graph";
 
 const Table = () => {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [cellColors, setCellColors] = useState([]);
+
+  const numTableRows = 4;
+  const numTableColumns = 4;
+
+  const graph = new Graph(numTableRows * numTableColumns);
 
   const changeCellColor = (rowIndex, cellIndex) => {
     const updatedColors = [...cellColors];
@@ -34,15 +40,58 @@ const Table = () => {
     return currentColor === "#884A39" ? "#FFFFFF" : "#884A39";
   };
 
+  const findNeighborhood = (rowIndex, colIndex) => {
+    const neighborhood = [];
+    neighborhood.push({
+      i: rowIndex,
+      j: colIndex - 1,
+    });
+    neighborhood.push({
+      i: rowIndex - 1,
+      j: colIndex,
+    });
+    neighborhood.push({
+      i: rowIndex,
+      j: colIndex + 1,
+    });
+    neighborhood.push({
+      i: rowIndex + 1,
+      j: colIndex,
+    });
+
+    const validNeighborhood = neighborhood.filter(({ i, j }) => {
+      return i >= 0 && i < numTableRows && j >= 0 && j < numTableColumns;
+    });
+
+    return validNeighborhood;
+  };
+
+  const findVerticeIndex = (rowIndex, colIndex) => {
+    return rowIndex * numTableColumns + colIndex;
+  };
+
   const rows = [];
 
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < numTableRows; i++) {
     const cells = [];
 
-    for (let j = 0; j < 40; j++) {
+    for (let j = 0; j < numTableColumns; j++) {
       const cellStyle = {
         backgroundColor: cellColors[i]?.[j] || "#FFFFFF",
       };
+
+      const cellId = findVerticeIndex(i, j);
+
+      if (cellStyle.backgroundColor === "#FFFFFF") {
+        const neighborhood = findNeighborhood(i, j);
+        const neighborhoodIndexes = neighborhood.map((neighbor) => {
+          return findVerticeIndex(neighbor.i, neighbor.j);
+        });
+
+        graph.addNeighbors(cellId, neighborhoodIndexes);
+      } else {
+        graph.createWall(cellId);
+      }
 
       cells.push(
         <td
@@ -51,7 +100,9 @@ const Table = () => {
           onMouseDown={() => handleCellMouseDown(i, j)}
           onMouseEnter={() => handleCellMouseEnter(i, j)}
           onMouseUp={handleCellMouseUp}
-        ></td>
+        >
+          {/* {findVerticeIndex(i, j)} */}
+        </td>
       );
     }
 
