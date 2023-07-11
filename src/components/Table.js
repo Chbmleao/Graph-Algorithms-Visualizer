@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./GraphStyles.css";
+import "../styles/TableStyles.css";
 
-const Graph = () => {
+const Table = () => {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [cellColors, setCellColors] = useState([]);
 
@@ -65,4 +65,4 @@ const Graph = () => {
   );
 };
 
-export default Graph;
+export default Table;
