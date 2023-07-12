@@ -100,7 +100,9 @@ class Graph {
     }
   }
 
-  addWall(cellId) {
+  addWall(verticeCoordinates) {
+    const cellId = this.getVerticeIndex(verticeCoordinates);
+
     for (let i = 0; i < this.numVertices; i++) {
       this.matrix[i][cellId] = 0;
       this.matrix[cellId][i] = 0;
