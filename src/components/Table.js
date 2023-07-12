@@ -1,22 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/TableStyles.css";
-import Graph from "./Graph";
+import axios from "axios";
 
 const Table = () => {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [cellColors, setCellColors] = useState([]);
+  const [numTableRows, setNumTableRows] = useState(0);
+  const [numTableCols, setNumTableCols] = useState(0);
 
-  const numTableRows = 4;
-  const numTableColumns = 4;
+  const getTableSize = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/tableSize");
+      const tableSize = response.data;
+      console.log("Table Size:", tableSize);
+      setNumTableRows(tableSize.numTableRows);
+      setNumTableCols(tableSize.numTableCols);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
-  const graph = new Graph(numTableRows * numTableColumns);
+  const postWall = async (row, col) => {
+    try {
+      const data = {
+        i: row,
+        j: col,
+      };
 
-  const changeCellColor = (rowIndex, cellIndex) => {
+      const response = await axios.post(
+        "http://localhost:5000/api/addWall",
+        data
+      );
+      console.log("Post Wall Response:", response.data);
+    } catch (error) {
+      console.error("Post Wall Error", error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    getTableSize();
+  }, []);
+
+  const changeCellColor = async (rowIndex, cellIndex) => {
     const updatedColors = [...cellColors];
     updatedColors[rowIndex] = updatedColors[rowIndex] || [];
     updatedColors[rowIndex][cellIndex] = toggleColor(
       updatedColors[rowIndex]?.[cellIndex]
     );
+
+    if (updatedColors[rowIndex][cellIndex] == "#884A39") {
+      try {
+        await postWall(rowIndex, cellIndex);
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
     setCellColors(updatedColors);
   };
@@ -40,59 +80,15 @@ const Table = () => {
     return currentColor === "#884A39" ? "#FFFFFF" : "#884A39";
   };
 
-  const findNeighborhood = (rowIndex, colIndex) => {
-    const neighborhood = [];
-    neighborhood.push({
-      i: rowIndex,
-      j: colIndex - 1,
-    });
-    neighborhood.push({
-      i: rowIndex - 1,
-      j: colIndex,
-    });
-    neighborhood.push({
-      i: rowIndex,
-      j: colIndex + 1,
-    });
-    neighborhood.push({
-      i: rowIndex + 1,
-      j: colIndex,
-    });
-
-    const validNeighborhood = neighborhood.filter(({ i, j }) => {
-      return i >= 0 && i < numTableRows && j >= 0 && j < numTableColumns;
-    });
-
-    return validNeighborhood;
-  };
-
-  const findVerticeIndex = (rowIndex, colIndex) => {
-    return rowIndex * numTableColumns + colIndex;
-  };
-
   const rows = [];
 
   for (let i = 0; i < numTableRows; i++) {
     const cells = [];
 
-    for (let j = 0; j < numTableColumns; j++) {
+    for (let j = 0; j < numTableCols; j++) {
       const cellStyle = {
         backgroundColor: cellColors[i]?.[j] || "#FFFFFF",
       };
-
-      const cellId = findVerticeIndex(i, j);
-
-      if (cellStyle.backgroundColor === "#FFFFFF") {
-        const neighborhood = findNeighborhood(i, j);
-        const neighborhoodIndexes = neighborhood.map((neighbor) => {
-          return findVerticeIndex(neighbor.i, neighbor.j);
-        });
-
-        graph.addNeighbors(cellId, neighborhoodIndexes);
-      } else {
-        graph.createWall(cellId);
-      }
-
       cells.push(
         <td
           key={j}
