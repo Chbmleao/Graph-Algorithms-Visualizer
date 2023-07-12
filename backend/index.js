@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const Graph = require("./Graph");
 
 const numTableRows = 4;
@@ -12,6 +13,7 @@ graph.addWall(5);
 graph.printGraph();
 
 const app = express();
+app.use(cors());
 const PORT = 5000;
 
 app.post("/api/addWall", (req, res) => {
