@@ -7,10 +7,23 @@ const graph = new Graph(numTableRows, numTableCols);
 
 graph.printGraph();
 
+graph.addWall(5);
+
+graph.printGraph();
+
 const app = express();
 const PORT = 5000;
 
-app.post("/api/addWall", (req, res) => {});
+app.post("/api/addWall", (req, res) => {
+  const { cellIndex } = req.body;
+  console.log(cellIndex);
+});
+
+app.get("/api/tableSize", (req, res) => {
+  const tableSize = graph.getTableSize();
+
+  res.json(tableSize);
+});
 
 app.post("/api/addNeighbors", (req, res) => {
   const data = req.body;
