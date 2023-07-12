@@ -12,6 +12,15 @@ class Graph {
     this.addAllNeighbors();
   }
 
+  getTableSize() {
+    const tableSize = {
+      numTableRows: this.numTableRows,
+      numTableCols: this.numTableCols,
+    };
+
+    return tableSize;
+  }
+
   createNullMatrix() {
     for (let i = 0; i < this.numVertices; i++) {
       this.matrix[i] = [];
@@ -91,7 +100,7 @@ class Graph {
     }
   }
 
-  createWall(cellId) {
+  addWall(cellId) {
     for (let i = 0; i < this.numVertices; i++) {
       this.matrix[i][cellId] = 0;
       this.matrix[cellId][i] = 0;
