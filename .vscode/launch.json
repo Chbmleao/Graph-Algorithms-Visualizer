@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "configurations": [
+    {
+      "command": "nodemon backend/index.js",
+      "name": "Backend",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "npm start",
+      "name": "Frontend",
+      "request": "launch",
+      "type": "node-terminal"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "DevEnvironment",
+      "configurations": ["Backend", "Frontend"]
+    }
+  ]
+}
