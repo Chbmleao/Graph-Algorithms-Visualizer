@@ -1,9 +1,9 @@
 .graph {
-  margin: 2vw;
+  margin: 5vw;
   border-collapse: collapse;
   border-spacing: 0;
-  height: 80vh;
-  width: 96vw;
+  height: 90vh;
+  width: 90vw;
   -webkit-user-drag: none;
   user-select: none;
 }
@@ -13,8 +13,9 @@
 }
 
 .graph td {
+  width: calc(96vw / var(--numTableCols));
+  height: calc(96vw / var(--numTableCols));
   transition: background-color 0.5s ease, background-position 0.5s ease;
-  background-position: center center;
   border: 3px solid #ffc26f;
-  width: auto;
+  white-space: nowrap;
 }
