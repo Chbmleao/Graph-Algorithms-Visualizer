@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "../styles/TableStyles.css";
 import axios from "axios";
 
+import { FaAngleRight } from "react-icons/fa6";
+
 const Table = () => {
   const [numTableRows, setNumTableRows] = useState(0);
   const [numTableCols, setNumTableCols] = useState(0);
@@ -22,7 +24,7 @@ const Table = () => {
       setNumTableCols(tableSize.numTableCols);
       setStartPosition({
         row: Math.floor(tableSize.numTableRows / 2),
-        col: Math.floor(tableSize.numTableCols / 3),
+        col: Math.floor(tableSize.numTableCols / 10),
       });
       setTableStyle({
         "--numTableRows": tableSize.numTableRows,
@@ -135,7 +137,7 @@ const Table = () => {
             onMouseEnter={() => handleCellMouseEnter(i, j)}
             onMouseUp={handleCellMouseUp}
           >
-            <div>S</div>
+            <FaAngleRight className="start-icon" />
           </td>
         );
       } else {
