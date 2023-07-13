@@ -3,11 +3,13 @@ import "../styles/TableStyles.css";
 import axios from "axios";
 
 import { FaAngleRight } from "react-icons/fa6";
+import { FaFlagCheckered } from "react-icons/fa6";
 
 const Table = () => {
   const [numTableRows, setNumTableRows] = useState(0);
   const [numTableCols, setNumTableCols] = useState(0);
   const [startPosition, setStartPosition] = useState({ row: 0, col: 0 });
+  const [endPosition, setEndPosition] = useState({ row: 0, col: 0 });
   const [tableStyle, setTableStyle] = useState({
     "--numTableRows": 20,
     "--numTableCols": 30,
@@ -25,6 +27,10 @@ const Table = () => {
       setStartPosition({
         row: Math.floor(tableSize.numTableRows / 2),
         col: Math.floor(tableSize.numTableCols / 10),
+      });
+      setEndPosition({
+        row: Math.floor(tableSize.numTableRows / 2),
+        col: Math.floor((tableSize.numTableCols / 10) * 9 - 1),
       });
       setTableStyle({
         "--numTableRows": tableSize.numTableRows,
@@ -119,40 +125,43 @@ const Table = () => {
     return currentColor === "#884A39" ? "#FFFFFF" : "#884A39";
   };
 
+  const tableCellConstructor = (row, col) => {
+    const cellStyle = {
+      backgroundColor: cellColors[row]?.[col] || "#FFFFFF",
+    };
+
+    const isStartCell = row === startPosition.row && col === startPosition.col;
+    const isEndCell = row === endPosition.row && col === endPosition.col;
+
+    let icon = "";
+    if (isStartCell || isEndCell) {
+      icon = isStartCell ? (
+        <FaAngleRight className="start-icon" />
+      ) : (
+        <FaFlagCheckered className="end-icon" />
+      );
+    }
+    return (
+      <td
+        key={col}
+        style={cellStyle}
+        onMouseDown={() => handleCellMouseDown(row, col)}
+        onMouseEnter={() => handleCellMouseEnter(row, col)}
+        onMouseUp={handleCellMouseUp}
+      >
+        {icon}
+      </td>
+    );
+  };
+
   const rows = [];
 
   for (let i = 0; i < numTableRows; i++) {
     const cells = [];
 
     for (let j = 0; j < numTableCols; j++) {
-      const cellStyle = {
-        backgroundColor: cellColors[i]?.[j] || "#FFFFFF",
-      };
-      if (i === startPosition.row && j === startPosition.col) {
-        cells.push(
-          <td
-            key={j}
-            style={cellStyle}
-            onMouseDown={() => handleCellMouseDown(i, j)}
-            onMouseEnter={() => handleCellMouseEnter(i, j)}
-            onMouseUp={handleCellMouseUp}
-          >
-            <FaAngleRight className="start-icon" />
-          </td>
-        );
-      } else {
-        cells.push(
-          <td
-            key={j}
-            style={cellStyle}
-            onMouseDown={() => handleCellMouseDown(i, j)}
-            onMouseEnter={() => handleCellMouseEnter(i, j)}
-            onMouseUp={handleCellMouseUp}
-          >
-            {/* {findVerticeIndex(i, j)} */}
-          </td>
-        );
-      }
+      const cell = tableCellConstructor(i, j);
+      cells.push(cell);
     }
 
     rows.push(<tr key={i}>{cells}</tr>);
