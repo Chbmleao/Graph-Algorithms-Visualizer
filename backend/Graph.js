@@ -40,7 +40,7 @@ class Graph {
   }
 
   getVerticeCoordinates(verticeId) {
-    const column = verticeId % this.numTableRows;
+    const column = verticeId % this.numTableCols;
     const row = Math.floor(verticeId / this.numTableCols);
     const coordinates = { i: row, j: column };
 
@@ -89,17 +89,18 @@ class Graph {
 
   addNeighbors(index, neighborhood) {
     neighborhood.forEach((neighbor) => {
-      this.matrix[neighbor][index] = 1;
       this.matrix[index][neighbor] = 1;
     });
   }
 
   addWall(verticeCoordinates) {
-    const cellId = this.getVerticeIndex(verticeCoordinates);
+    const neighborhood = this.findNeighborhood(verticeCoordinates);
 
-    for (let i = 0; i < this.numVertices; i++) {
-      this.matrix[i][cellId] = 0;
-    }
+    const verticeId = this.getVerticeIndex(verticeCoordinates);
+
+    neighborhood.forEach((neighbor) => {
+      this.matrix[neighbor][verticeId] = 0;
+    });
   }
 
   removeWall(verticeCoordinates) {
@@ -116,15 +117,15 @@ class Graph {
     let total = 0;
 
     for (let i = 0; i < this.numVertices; i++) {
-      console.log("Cell", i, "neighborhood: ");
+      // console.log("Cell", i, "neighborhood: ");
       for (let j = 0; j < this.numVertices; j++) {
         if (this.matrix[i][j] == 1) {
-          process.stdout.write(j.toString());
-          process.stdout.write("  ");
+          // process.stdout.write(j.toString());
+          // process.stdout.write("  ");
           total += 1;
         }
       }
-      console.log();
+      // console.log();
     }
     console.log("total:", total);
   }
