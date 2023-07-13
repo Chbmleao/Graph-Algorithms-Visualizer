@@ -39,6 +39,24 @@ const Table = () => {
     }
   };
 
+  const deleteWall = async (row, col) => {
+    try {
+      const data = {
+        i: row,
+        j: col,
+      };
+
+      const response = await axios.delete(
+        "http://localhost:5000/api/removeWall",
+        { data }
+      );
+      console.log("Delete Wall Response:", response.data);
+    } catch (error) {
+      console.error("Delete Wall Error", error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
     getTableSize();
   }, []);
@@ -53,6 +71,12 @@ const Table = () => {
     if (updatedColors[rowIndex][cellIndex] == "#884A39") {
       try {
         await postWall(rowIndex, cellIndex);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
+        await deleteWall(rowIndex, cellIndex);
       } catch (error) {
         console.error(error);
       }
