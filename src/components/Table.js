@@ -6,6 +6,10 @@ const Table = () => {
   const [numTableRows, setNumTableRows] = useState(0);
   const [numTableCols, setNumTableCols] = useState(0);
   const [startPosition, setStartPosition] = useState({ row: 0, col: 0 });
+  const [tableStyle, setTableStyle] = useState({
+    "--numTableRows": 20,
+    "--numTableCols": 30,
+  });
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [cellColors, setCellColors] = useState([]);
 
@@ -19,6 +23,10 @@ const Table = () => {
       setStartPosition({
         row: Math.floor(tableSize.numTableRows / 2),
         col: Math.floor(tableSize.numTableCols / 3),
+      });
+      setTableStyle({
+        "--numTableRows": tableSize.numTableRows,
+        "--numTableCols": tableSize.numTableCols,
       });
     } catch (error) {
       console.error(error);
@@ -127,7 +135,7 @@ const Table = () => {
             onMouseEnter={() => handleCellMouseEnter(i, j)}
             onMouseUp={handleCellMouseUp}
           >
-            S
+            <div>S</div>
           </td>
         );
       } else {
@@ -149,7 +157,7 @@ const Table = () => {
   }
 
   return (
-    <table className="graph">
+    <table className="graph" style={tableStyle}>
       <tbody>{rows}</tbody>
     </table>
   );
