@@ -3,10 +3,11 @@ import "../styles/TableStyles.css";
 import axios from "axios";
 
 const Table = () => {
-  const [isMouseDown, setIsMouseDown] = useState(false);
-  const [cellColors, setCellColors] = useState([]);
   const [numTableRows, setNumTableRows] = useState(0);
   const [numTableCols, setNumTableCols] = useState(0);
+  const [startPosition, setStartPosition] = useState({ row: 0, col: 0 });
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [cellColors, setCellColors] = useState([]);
 
   const getTableSize = async () => {
     try {
@@ -15,6 +16,10 @@ const Table = () => {
       console.log("Table Size:", tableSize);
       setNumTableRows(tableSize.numTableRows);
       setNumTableCols(tableSize.numTableCols);
+      setStartPosition({
+        row: Math.floor(tableSize.numTableRows / 2),
+        col: Math.floor(tableSize.numTableCols / 3),
+      });
     } catch (error) {
       console.error(error);
       throw error;
@@ -68,7 +73,7 @@ const Table = () => {
       updatedColors[rowIndex]?.[cellIndex]
     );
 
-    if (updatedColors[rowIndex][cellIndex] == "#884A39") {
+    if (updatedColors[rowIndex][cellIndex] === "#884A39") {
       try {
         await postWall(rowIndex, cellIndex);
       } catch (error) {
@@ -113,17 +118,31 @@ const Table = () => {
       const cellStyle = {
         backgroundColor: cellColors[i]?.[j] || "#FFFFFF",
       };
-      cells.push(
-        <td
-          key={j}
-          style={cellStyle}
-          onMouseDown={() => handleCellMouseDown(i, j)}
-          onMouseEnter={() => handleCellMouseEnter(i, j)}
-          onMouseUp={handleCellMouseUp}
-        >
-          {/* {findVerticeIndex(i, j)} */}
-        </td>
-      );
+      if (i === startPosition.row && j === startPosition.col) {
+        cells.push(
+          <td
+            key={j}
+            style={cellStyle}
+            onMouseDown={() => handleCellMouseDown(i, j)}
+            onMouseEnter={() => handleCellMouseEnter(i, j)}
+            onMouseUp={handleCellMouseUp}
+          >
+            S
+          </td>
+        );
+      } else {
+        cells.push(
+          <td
+            key={j}
+            style={cellStyle}
+            onMouseDown={() => handleCellMouseDown(i, j)}
+            onMouseEnter={() => handleCellMouseEnter(i, j)}
+            onMouseUp={handleCellMouseUp}
+          >
+            {/* {findVerticeIndex(i, j)} */}
+          </td>
+        );
+      }
     }
 
     rows.push(<tr key={i}>{cells}</tr>);
