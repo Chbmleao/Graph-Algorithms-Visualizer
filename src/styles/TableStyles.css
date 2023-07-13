@@ -27,8 +27,15 @@
 }
 
 .graph td .start-icon {
-  color: #883950;
+  color: #4a3988;
   width: 90%;
+  height: auto;
+  margin: auto;
+}
+
+.graph td .end-icon {
+  color: #39884a;
+  width: 80%;
   height: auto;
   margin: auto;
 }
