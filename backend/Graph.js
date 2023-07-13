@@ -1,5 +1,3 @@
-const { type } = require("@testing-library/user-event/dist/type");
-
 class Graph {
   constructor(numTableRows, numTableCols) {
     this.numTableRows = numTableRows;
@@ -43,7 +41,7 @@ class Graph {
 
   getVerticeCoordinates(verticeId) {
     const column = verticeId % this.numTableRows;
-    const row = (verticeId - column) / this.numTableCols;
+    const row = Math.floor(verticeId / this.numTableCols);
     const coordinates = { i: row, j: column };
 
     return coordinates;
@@ -90,14 +88,10 @@ class Graph {
   }
 
   addNeighbors(index, neighborhood) {
-    neighborhood.forEach((neighborCoordinates) => {
-      this.matrix[neighborCoordinates.i];
+    neighborhood.forEach((neighbor) => {
+      this.matrix[neighbor][index] = 1;
+      this.matrix[index][neighbor] = 1;
     });
-
-    for (let key in neighborhood) {
-      this.matrix[neighborhood[key]][index] = 1;
-      this.matrix[index][neighborhood[key]] = 1;
-    }
   }
 
   addWall(verticeCoordinates) {
@@ -105,19 +99,34 @@ class Graph {
 
     for (let i = 0; i < this.numVertices; i++) {
       this.matrix[i][cellId] = 0;
-      this.matrix[cellId][i] = 0;
     }
   }
 
+  removeWall(verticeCoordinates) {
+    const neighborhood = this.findNeighborhood(verticeCoordinates);
+
+    const verticeId = this.getVerticeIndex(verticeCoordinates);
+
+    neighborhood.forEach((neighbor) => {
+      this.matrix[neighbor][verticeId] = 1;
+    });
+  }
+
   printGraph() {
+    let total = 0;
+
     for (let i = 0; i < this.numVertices; i++) {
-      console.log("Cell ", i, " neighborhood: ");
+      console.log("Cell", i, "neighborhood: ");
       for (let j = 0; j < this.numVertices; j++) {
         if (this.matrix[i][j] == 1) {
-          console.log(j);
+          process.stdout.write(j.toString());
+          process.stdout.write("  ");
+          total += 1;
         }
       }
+      console.log();
     }
+    console.log("total:", total);
   }
 }
 
