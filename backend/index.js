@@ -15,11 +15,22 @@ const PORT = 5000;
 
 app.post("/api/addWall", (req, res) => {
   const wallCoordinates = req.body;
-  console.log(wallCoordinates);
 
   graph.addWall(wallCoordinates);
 
-  res.status(200).json({ message: "Add wall sucessfully" });
+  graph.printGraph();
+
+  res.status(200).json({ message: "Wall added successfully" });
+});
+
+app.delete("/api/removeWall", (req, res) => {
+  const wallCoordinates = req.body;
+
+  graph.removeWall(wallCoordinates);
+
+  graph.printGraph();
+
+  res.status(200).json({ message: "Wall removed successfully" });
 });
 
 app.get("/api/tableSize", (req, res) => {
