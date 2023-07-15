@@ -113,6 +113,10 @@ class Graph {
     });
   }
 
+  removeAllWalls() {
+    this.addAllNeighbors();
+  }
+
   printGraph() {
     let total = 0;
 
