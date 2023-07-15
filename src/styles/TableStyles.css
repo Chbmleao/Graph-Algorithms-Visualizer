@@ -4,8 +4,6 @@
   border-spacing: 0;
   height: 90vh;
   width: 90vw;
-  -webkit-user-drag: none;
-  user-select: none;
 }
 
 .graph tr {
@@ -24,18 +22,4 @@
   align-items: center;
   box-sizing: border-box;
   margin: -1.5px -1.5px;
-}
-
-.graph td .start-icon {
-  color: #4a3988;
-  width: 90%;
-  height: auto;
-  margin: auto;
-}
-
-.graph td .end-icon {
-  color: #39884a;
-  width: 80%;
-  height: auto;
-  margin: auto;
 }
