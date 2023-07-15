@@ -3,7 +3,7 @@ import "../styles/NavbarStyles.css";
 
 import React from "react";
 
-const Navbar = () => {
+const Navbar = ({ onClearClick }) => {
   return (
     <div className="header">
       <Link to="/">
@@ -20,7 +20,7 @@ const Navbar = () => {
           <button>Visualize</button>
         </li>
         <li>
-          <button>Clear</button>
+          <button onClick={onClearClick}>Clear</button>
         </li>
         <li>
           <button>Speed</button>
