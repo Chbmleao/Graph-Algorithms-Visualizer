@@ -33,6 +33,14 @@ app.delete("/api/removeWall", (req, res) => {
   res.status(200).json({ message: "Wall removed successfully" });
 });
 
+app.delete("/api/removeAllWalls", (req, res) => {
+  graph.removeAllWalls();
+
+  graph.printGraph();
+
+  res.status(200).json({ message: "All walls removed successfully" });
+});
+
 app.get("/api/tableSize", (req, res) => {
   const tableSize = graph.getTableSize();
 
