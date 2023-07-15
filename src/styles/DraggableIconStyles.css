@@ -1,0 +1,22 @@
+.icon-container {
+  padding: 0;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.start-icon {
+  color: #4a3988;
+  width: 90%;
+  height: auto;
+  margin: auto;
+}
+
+.end-icon {
+  color: #39884a;
+  width: 80%;
+  height: auto;
+  margin: auto;
+}
