@@ -5,7 +5,7 @@ import axios from "axios";
 import { FaAngleRight } from "react-icons/fa6";
 import { FaFlagCheckered } from "react-icons/fa6";
 
-const Table = () => {
+const Table = ({ cellColors, setCellColors }) => {
   const [numTableRows, setNumTableRows] = useState(0);
   const [numTableCols, setNumTableCols] = useState(0);
   const [startPosition, setStartPosition] = useState({ row: 0, col: 0 });
@@ -15,7 +15,6 @@ const Table = () => {
     "--numTableCols": 30,
   });
   const [isMouseDown, setIsMouseDown] = useState(false);
-  const [cellColors, setCellColors] = useState([]);
 
   const getTableSize = async () => {
     try {
