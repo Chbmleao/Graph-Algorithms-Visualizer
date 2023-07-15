@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/TableStyles.css";
 import axios from "axios";
 
-import { FaAngleRight } from "react-icons/fa6";
-import { FaFlagCheckered } from "react-icons/fa6";
+import DraggableIcon from "./DraggableIcon";
 
 const Table = ({ cellColors, setCellColors }) => {
   const [numTableRows, setNumTableRows] = useState(0);
@@ -145,20 +144,10 @@ const Table = ({ cellColors, setCellColors }) => {
 
     let icon = "";
     if (isStartCell || isEndCell) {
-      icon = isStartCell ? (
-        <FaAngleRight className="start-icon" />
-      ) : (
-        <FaFlagCheckered className="end-icon" />
-      );
+      icon = <DraggableIcon isStart={isStartCell} />;
     }
     return (
-      <td
-        key={col}
-        style={cellStyle}
-        onMouseDown={() => handleCellMouseDown(row, col)}
-        onMouseEnter={() => handleCellMouseEnter(row, col)}
-        onMouseUp={handleCellMouseUp}
-      >
+      <td key={col} style={cellStyle}>
         {icon}
       </td>
     );
