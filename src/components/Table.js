@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../styles/TableStyles.css";
 import axios from "axios";
 
-import DraggableIcon from "./DraggableIcon";
+import DraggableIcon from "./Icon";
 
 const Table = ({ cellColors, setCellColors }) => {
   const [numTableRows, setNumTableRows] = useState(0);
@@ -115,6 +115,11 @@ const Table = ({ cellColors, setCellColors }) => {
     }
   };
 
+  const changeIconPosition = (row, col) => {
+    const newPosition = { row: row, col: col };
+    setStartPosition(newPosition);
+  };
+
   const handleCellMouseDown = (rowIndex, cellIndex) => {
     setIsMouseDown(true);
     changeCellColor(rowIndex, cellIndex);
@@ -147,7 +152,15 @@ const Table = ({ cellColors, setCellColors }) => {
       icon = <DraggableIcon isStart={isStartCell} />;
     }
     return (
-      <td key={col} style={cellStyle}>
+      <td
+        data-row={row}
+        data-col={col}
+        key={col}
+        style={cellStyle}
+        onMouseDown={() => handleCellMouseDown(row, col)}
+        onMouseEnter={() => handleCellMouseEnter(row, col)}
+        onMouseUp={handleCellMouseUp}
+      >
         {icon}
       </td>
     );
