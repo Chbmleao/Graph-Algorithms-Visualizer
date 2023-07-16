@@ -80,17 +80,14 @@ const Table = ({ cellColors, setCellColors }) => {
     getTableSize();
   }, []);
 
+  const isStartCell = (row, col) =>
+    true ? row === startPosition.row && col === startPosition.col : false;
+
+  const isEndCell = (row, col) =>
+    true ? row === endPosition.row && col === endPosition.col : false;
+
   const changeCellColor = async (rowIndex, cellIndex) => {
-    const coordinates = {
-      row: rowIndex,
-      col: cellIndex,
-    };
-
-    const strCoordinates = JSON.stringify(coordinates);
-    const strStart = JSON.stringify(startPosition);
-    const strEnd = JSON.stringify(endPosition);
-
-    if (strCoordinates !== strStart && strCoordinates !== strEnd) {
+    if (!isStartCell(rowIndex, cellIndex) && !isEndCell(rowIndex, cellIndex)) {
       const updatedColors = [...cellColors];
       updatedColors[rowIndex] = updatedColors[rowIndex] || [];
       updatedColors[rowIndex][cellIndex] = toggleColor(
@@ -144,12 +141,12 @@ const Table = ({ cellColors, setCellColors }) => {
       backgroundColor: cellColors[row]?.[col] || "#FFFFFF",
     };
 
-    const isStartCell = row === startPosition.row && col === startPosition.col;
-    const isEndCell = row === endPosition.row && col === endPosition.col;
+    const isStart = isStartCell(row, col);
+    const isEnd = isEndCell(row, col);
 
     let icon = "";
-    if (isStartCell || isEndCell) {
-      icon = <DraggableIcon isStart={isStartCell} />;
+    if (isStart || isEnd) {
+      icon = <DraggableIcon isStart={isStart} />;
     }
     return (
       <td
