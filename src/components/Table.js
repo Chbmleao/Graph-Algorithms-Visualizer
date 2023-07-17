@@ -14,6 +14,8 @@ const Table = ({ cellColors, setCellColors }) => {
     "--numTableCols": 30,
   });
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [isDraggingStart, setIsDraggingStart] = useState(false);
+  const [isDraggingEnd, setIsDraggingEnd] = useState(false);
 
   const getTableSize = async () => {
     try {
@@ -87,49 +89,65 @@ const Table = ({ cellColors, setCellColors }) => {
     true ? row === endPosition.row && col === endPosition.col : false;
 
   const changeCellColor = async (rowIndex, cellIndex) => {
-    if (!isStartCell(rowIndex, cellIndex) && !isEndCell(rowIndex, cellIndex)) {
-      const updatedColors = [...cellColors];
-      updatedColors[rowIndex] = updatedColors[rowIndex] || [];
-      updatedColors[rowIndex][cellIndex] = toggleColor(
-        updatedColors[rowIndex]?.[cellIndex]
-      );
+    const updatedColors = [...cellColors];
+    updatedColors[rowIndex] = updatedColors[rowIndex] || [];
+    updatedColors[rowIndex][cellIndex] = toggleColor(
+      updatedColors[rowIndex]?.[cellIndex]
+    );
 
-      if (updatedColors[rowIndex][cellIndex] === "#884A39") {
-        try {
-          await postWall(rowIndex, cellIndex);
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
-        try {
-          await deleteWall(rowIndex, cellIndex);
-        } catch (error) {
-          console.error(error);
-        }
+    if (updatedColors[rowIndex][cellIndex] === "#884A39") {
+      try {
+        await postWall(rowIndex, cellIndex);
+      } catch (error) {
+        console.error(error);
       }
-
-      setCellColors(updatedColors);
+    } else {
+      try {
+        await deleteWall(rowIndex, cellIndex);
+      } catch (error) {
+        console.error(error);
+      }
     }
-  };
 
-  const changeIconPosition = (row, col) => {
-    const newPosition = { row: row, col: col };
-    setStartPosition(newPosition);
+    setCellColors(updatedColors);
   };
 
   const handleCellMouseDown = (rowIndex, cellIndex) => {
-    setIsMouseDown(true);
-    changeCellColor(rowIndex, cellIndex);
+    if (isStartCell(rowIndex, cellIndex)) {
+      setIsMouseDown(true);
+      setIsDraggingStart(true);
+    } else if (isEndCell(rowIndex, cellIndex)) {
+      setIsMouseDown(true);
+      setIsDraggingEnd(true);
+    } else {
+      setIsMouseDown(true);
+      changeCellColor(rowIndex, cellIndex);
+    }
   };
 
   const handleCellMouseEnter = (rowIndex, cellIndex) => {
-    if (isMouseDown) {
+    if (isMouseDown && !isDraggingStart && !isDraggingEnd) {
       changeCellColor(rowIndex, cellIndex);
+    }
+    if (isDraggingStart || isDraggingEnd) {
+      const newPosition = { row: rowIndex, col: cellIndex };
+
+      if (isDraggingStart) {
+        setStartPosition(newPosition);
+      } else {
+        setEndPosition(newPosition);
+      }
+
+      if (cellColors[rowIndex]?.[cellIndex] === "#884A39") {
+        changeCellColor(rowIndex, cellIndex);
+      }
     }
   };
 
   const handleCellMouseUp = () => {
     setIsMouseDown(false);
+    setIsDraggingStart(false);
+    setIsDraggingEnd(false);
   };
 
   const toggleColor = (currentColor) => {
