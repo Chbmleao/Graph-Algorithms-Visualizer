@@ -89,27 +89,29 @@ const Table = ({ cellColors, setCellColors }) => {
     true ? row === endPosition.row && col === endPosition.col : false;
 
   const changeCellColor = async (rowIndex, cellIndex) => {
-    const updatedColors = [...cellColors];
-    updatedColors[rowIndex] = updatedColors[rowIndex] || [];
-    updatedColors[rowIndex][cellIndex] = toggleColor(
-      updatedColors[rowIndex]?.[cellIndex]
-    );
+    if (!isStartCell(rowIndex, cellIndex) && !isEndCell(rowIndex, cellIndex)) {
+      const updatedColors = [...cellColors];
+      updatedColors[rowIndex] = updatedColors[rowIndex] || [];
+      updatedColors[rowIndex][cellIndex] = toggleColor(
+        updatedColors[rowIndex]?.[cellIndex]
+      );
 
-    if (updatedColors[rowIndex][cellIndex] === "#884A39") {
-      try {
-        await postWall(rowIndex, cellIndex);
-      } catch (error) {
-        console.error(error);
+      if (updatedColors[rowIndex][cellIndex] === "#884A39") {
+        try {
+          await postWall(rowIndex, cellIndex);
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        try {
+          await deleteWall(rowIndex, cellIndex);
+        } catch (error) {
+          console.error(error);
+        }
       }
-    } else {
-      try {
-        await deleteWall(rowIndex, cellIndex);
-      } catch (error) {
-        console.error(error);
-      }
+
+      setCellColors(updatedColors);
     }
-
-    setCellColors(updatedColors);
   };
 
   const handleCellMouseDown = (rowIndex, cellIndex) => {
