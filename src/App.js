@@ -6,6 +6,11 @@ import Table from "./components/Table";
 
 function App() {
   const [cellColors, setCellColors] = useState([]);
+  const [algorithmSelected, setAlgorithmSelected] = useState("none");
+
+  const handleAlgorithmSelect = (algorithm) => {
+    setAlgorithmSelected(algorithm);
+  };
 
   const handleClearClick = () => {
     const updatedColors = [];
@@ -28,7 +33,10 @@ function App() {
 
   return (
     <div>
-      <Navbar onClearClick={handleClearClick} />
+      <Navbar
+        onClearClick={handleClearClick}
+        onAlgorithmSelect={handleAlgorithmSelect}
+      />
       <Table cellColors={cellColors} setCellColors={setCellColors} />
     </div>
   );
