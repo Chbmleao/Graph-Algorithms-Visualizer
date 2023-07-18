@@ -117,6 +117,56 @@ class Graph {
     this.addAllNeighbors();
   }
 
+  minDistance(dist, sptSet) {
+    let min = Number.MAX_VALUE;
+    let minIndex = -1;
+
+    for (let v = 0; v < this.numVertices; v++) {
+      if (sptSet[v] == false && dist[v] <= min) {
+        min = dist[v];
+        minIndex = v;
+      }
+    }
+    return minIndex;
+  }
+
+  dijkstra(src) {
+    let dist = new Array(this.numVertices);
+    let sptSet = new Array(this.numVertices);
+
+    for (let i = 0; i < this.numVertices; i++) {
+      dist[i] = Number.MAX_VALUE;
+      sptSet[i] = false;
+    }
+
+    dist[src] = 0;
+
+    for (let count = 0; count < this.numVertices - 1; count++) {
+      let u = this.minDistance(dist, sptSet);
+      sptSet[u] = true;
+
+      for (let v = 0; v < this.numVertices; v++) {
+        if (
+          !sptSet[v] &&
+          this.matrix[u][v] != 0 &&
+          dist[u] != Number.MAX_VALUE &&
+          dist[u] + this.matrix[u][v] < dist[v]
+        ) {
+          dist[v] = dist[u] + this.matrix[u][v];
+        }
+      }
+    }
+
+    this.printSolution(dist);
+  }
+
+  printSolution(dist) {
+    console.log("Vertex \t\t Distance from Source");
+    for (let i = 0; i < this.numVertices; i++) {
+      console.log(i + " \t\t " + dist[i]);
+    }
+  }
+
   printGraph() {
     let total = 0;
 
