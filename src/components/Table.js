@@ -4,11 +4,16 @@ import axios from "axios";
 
 import DraggableIcon from "./Icon";
 
-const Table = ({ cellColors, setCellColors }) => {
+const Table = ({
+  cellColors,
+  setCellColors,
+  startPosition,
+  endPosition,
+  onStartPositionChange,
+  onEndPositionChange,
+}) => {
   const [numTableRows, setNumTableRows] = useState(0);
   const [numTableCols, setNumTableCols] = useState(0);
-  const [startPosition, setStartPosition] = useState({ row: 0, col: 0 });
-  const [endPosition, setEndPosition] = useState({ row: 0, col: 0 });
   const [tableStyle, setTableStyle] = useState({
     "--numTableRows": 20,
     "--numTableCols": 30,
@@ -24,11 +29,11 @@ const Table = ({ cellColors, setCellColors }) => {
       console.log("Table Size:", tableSize);
       setNumTableRows(tableSize.numTableRows);
       setNumTableCols(tableSize.numTableCols);
-      setStartPosition({
+      onStartPositionChange({
         row: Math.floor(tableSize.numTableRows / 2),
         col: Math.floor(tableSize.numTableCols / 10),
       });
-      setEndPosition({
+      onEndPositionChange({
         row: Math.floor(tableSize.numTableRows / 2),
         col: Math.floor((tableSize.numTableCols / 10) * 9 - 1),
       });
@@ -135,9 +140,9 @@ const Table = ({ cellColors, setCellColors }) => {
       const newPosition = { row: rowIndex, col: cellIndex };
 
       if (isDraggingStart) {
-        setStartPosition(newPosition);
+        onStartPositionChange(newPosition);
       } else {
-        setEndPosition(newPosition);
+        onEndPositionChange(newPosition);
       }
 
       if (cellColors[rowIndex]?.[cellIndex] === "#884A39") {

@@ -6,18 +6,8 @@ import Table from "./components/Table";
 
 function App() {
   const [cellColors, setCellColors] = useState([]);
-  const [algorithmSelected, setAlgorithmSelected] = useState("none");
-
-  const handleAlgorithmSelect = (algorithm) => {
-    setAlgorithmSelected(algorithm);
-  };
-
-  const handleClearClick = () => {
-    const updatedColors = [];
-
-    setCellColors(updatedColors);
-    deleteAllWalls();
-  };
+  const [startPosition, setStartPosition] = useState({ row: 0, col: 0 });
+  const [endPosition, setEndPosition] = useState({ row: 0, col: 0 });
 
   const deleteAllWalls = async () => {
     try {
@@ -31,13 +21,40 @@ function App() {
     }
   };
 
+  const handleStartPositionChange = (newPosition) => {
+    setStartPosition(newPosition);
+  };
+
+  const handleEndPositionChange = (newPosition) => {
+    setEndPosition(newPosition);
+  };
+
+  const handleClearClick = () => {
+    const updatedColors = [];
+
+    setCellColors(updatedColors);
+    deleteAllWalls();
+  };
+
   return (
     <div>
       <Navbar
         onClearClick={handleClearClick}
-        onAlgorithmSelect={handleAlgorithmSelect}
+        getStartPosition={() => {
+          return startPosition;
+        }}
+        getEndPosition={() => {
+          return endPosition;
+        }}
       />
-      <Table cellColors={cellColors} setCellColors={setCellColors} />
+      <Table
+        cellColors={cellColors}
+        setCellColors={setCellColors}
+        startPosition={startPosition}
+        endPosition={endPosition}
+        onStartPositionChange={handleStartPositionChange}
+        onEndPositionChange={handleEndPositionChange}
+      />
     </div>
   );
 }
