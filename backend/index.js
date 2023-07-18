@@ -48,19 +48,19 @@ app.get("/api/tableSize", (req, res) => {
 });
 
 app.post("/api/algorithm/dijkstra", (req, res) => {
-  const { startCoordinates, endCoordinates } = req.body;
+  const { startCoordinates, endCoordinates } = req.body.coordinates;
 
   res.status(200).json({ message: "Dijkstra algorithm executed" });
 });
 
 app.post("/api/algorithm/bfs", (req, res) => {
-  const { startCoordinates, endCoordinates } = req.body;
+  const { startCoordinates, endCoordinates } = req.body.coordinates;
 
   res.status(200).json({ message: "BFS algorithm executed" });
 });
 
 app.post("/api/algorithm/dfs", (req, res) => {
-  const { startCoordinates, endCoordinates } = req.body;
+  const { startCoordinates, endCoordinates } = req.body.coordinates;
 
   res.status(200).json({ message: "DFS algorithm executed" });
 });
