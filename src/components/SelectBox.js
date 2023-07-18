@@ -2,11 +2,16 @@ import "../styles/SelectBoxStyles.css";
 
 import React from "react";
 
-const SelectBox = () => {
+const SelectBox = ({ onAlgorithmSelect }) => {
+  const handleAlgorithmChange = (event) => {
+    const selectedAlgorithm = event.target.value;
+    onAlgorithmSelect(selectedAlgorithm);
+  };
+
   return (
     <div className="select">
-      <select name="algorithms">
-        <option selected value="0">
+      <select name="algorithms" onChange={handleAlgorithmChange}>
+        <option defaultValue value="none">
           Select an algorithm
         </option>
         <option value="dijkstra">Dijkstra</option>
