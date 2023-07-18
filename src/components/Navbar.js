@@ -1,10 +1,46 @@
 import { Link } from "react-router-dom";
 import "../styles/NavbarStyles.css";
 
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+
 import SelectBox from "./SelectBox";
 
-const Navbar = ({ onClearClick, onAlgorithmSelect }) => {
+const Navbar = ({ onClearClick, getStartPosition, getEndPosition }) => {
+  const [algorithmSelected, setAlgorithmSelected] = useState("none");
+
+  const handleAlgorithmSelect = (algorithm) => {
+    setAlgorithmSelected(algorithm);
+  };
+
+  const executeAlgorithm = async (route, coordinates) => {
+    try {
+      const data = {
+        coordinates,
+      };
+      const response = await axios.post(route, data);
+      console.log("Execute Algorithm Response:", response.data);
+    } catch (error) {
+      console.error("Execute Algorithm Error", error);
+      throw error;
+    }
+  };
+
+  const handleVisualizeClick = () => {
+    const startPosition = getStartPosition();
+    const endPosition = getEndPosition();
+
+    const coordinates = {
+      startCoordinates: startPosition,
+      endCoordinates: endPosition,
+    };
+
+    if (algorithmSelected != "none") {
+      const route = "http://localhost:5000/api/algorithm/" + algorithmSelected;
+      executeAlgorithm(route, coordinates);
+    }
+  };
+
   return (
     <div className="header">
       <Link to="/">
@@ -12,14 +48,15 @@ const Navbar = ({ onClearClick, onAlgorithmSelect }) => {
       </Link>
       <ul className="nav-menu">
         <li>
-          <SelectBox onAlgorithmSelect={onAlgorithmSelect} />
+          <SelectBox onAlgorithmSelect={handleAlgorithmSelect} />
+        </li>
+        <li>
+          <button onClick={handleVisualizeClick}>Visualize</button>
         </li>
         <li>
           <button>Mazes</button>
         </li>
-        <li>
-          <button>Visualize</button>
-        </li>
+
         <li>
           <button onClick={onClearClick}>Clear</button>
         </li>
