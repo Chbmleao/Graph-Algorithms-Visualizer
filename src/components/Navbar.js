@@ -4,7 +4,7 @@ import "../styles/NavbarStyles.css";
 import React from "react";
 import SelectBox from "./SelectBox";
 
-const Navbar = ({ onClearClick }) => {
+const Navbar = ({ onClearClick, onAlgorithmSelect }) => {
   return (
     <div className="header">
       <Link to="/">
@@ -12,7 +12,7 @@ const Navbar = ({ onClearClick }) => {
       </Link>
       <ul className="nav-menu">
         <li>
-          <SelectBox />
+          <SelectBox onAlgorithmSelect={onAlgorithmSelect} />
         </li>
         <li>
           <button>Mazes</button>
