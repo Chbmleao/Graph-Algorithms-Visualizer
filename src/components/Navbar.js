@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "../styles/NavbarStyles.css";
 
 import React from "react";
+import SelectBox from "./SelectBox";
 
 const Navbar = ({ onClearClick }) => {
   return (
@@ -11,7 +12,7 @@ const Navbar = ({ onClearClick }) => {
       </Link>
       <ul className="nav-menu">
         <li>
-          <button>Algorithms</button>
+          <SelectBox />
         </li>
         <li>
           <button>Mazes</button>
