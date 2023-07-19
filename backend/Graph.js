@@ -42,42 +42,47 @@ class Graph {
   getVerticeCoordinates(verticeId) {
     const column = verticeId % this.numTableCols;
     const row = Math.floor(verticeId / this.numTableCols);
-    const coordinates = { i: row, j: column };
+    const coordinates = { row: row, col: column };
 
     return coordinates;
   }
 
   getVerticeIndex(coordinates) {
-    const rowIndex = coordinates.i;
-    const colIndex = coordinates.j;
+    const rowIndex = coordinates.row;
+    const colIndex = coordinates.col;
 
     return rowIndex * this.numTableCols + colIndex;
   }
 
   findNeighborhood(coordinates) {
-    const row = coordinates.i;
-    const col = coordinates.j;
+    const row = coordinates.row;
+    const col = coordinates.col;
 
     const neighborhood = [];
     neighborhood.push({
-      i: row,
-      j: col - 1,
+      row: row,
+      col: col - 1,
     });
     neighborhood.push({
-      i: row - 1,
-      j: col,
+      row: row - 1,
+      col: col,
     });
     neighborhood.push({
-      i: row,
-      j: col + 1,
+      row: row,
+      col: col + 1,
     });
     neighborhood.push({
-      i: row + 1,
-      j: col,
+      row: row + 1,
+      col: col,
     });
 
-    const validNeighborhood = neighborhood.filter(({ i, j }) => {
-      return i >= 0 && i < this.numTableRows && j >= 0 && j < this.numTableCols;
+    const validNeighborhood = neighborhood.filter(({ row, col }) => {
+      return (
+        row >= 0 &&
+        row < this.numTableRows &&
+        col >= 0 &&
+        col < this.numTableCols
+      );
     });
 
     const neighborhoodIndexes = validNeighborhood.map((neighborCoordinates) => {
@@ -130,6 +135,42 @@ class Graph {
     return minIndex;
   }
 
+  bfs(start, end) {
+    let path = [];
+
+    let visited = new Array(this.numVertices);
+    for (let i = 0; i < this.numVertices; i++) {
+      visited[i] = false;
+    }
+
+    let queue = [];
+
+    visited[start] = true;
+    queue.push(start);
+    let vertice = 0;
+
+    while (queue.length > 0) {
+      vertice = queue[0];
+      path.push(vertice);
+      if (vertice === end) {
+        return path;
+      }
+
+      queue.shift();
+
+      for (let i = 0; i < this.numVertices; i++) {
+        if (this.matrix[vertice][i] === 1) {
+          if (!visited[i]) {
+            visited[i] = true;
+            queue.push(i);
+          }
+        }
+      }
+    }
+
+    return path;
+  }
+
   dijkstra(src) {
     let dist = new Array(this.numVertices);
     let sptSet = new Array(this.numVertices);
@@ -171,15 +212,15 @@ class Graph {
     let total = 0;
 
     for (let i = 0; i < this.numVertices; i++) {
-      // console.log("Cell", i, "neighborhood: ");
+      console.log("Cell", i, "neighborhood: ");
       for (let j = 0; j < this.numVertices; j++) {
         if (this.matrix[i][j] == 1) {
-          // process.stdout.write(j.toString());
-          // process.stdout.write("  ");
+          process.stdout.write(j.toString());
+          process.stdout.write("  ");
           total += 1;
         }
       }
-      // console.log();
+      console.log();
     }
     console.log("total:", total);
   }
