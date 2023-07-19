@@ -23,6 +23,7 @@ function App() {
   };
 
   const handleGraphPathChange = (newGraphPath) => {
+    handleClearPathClick();
     setGraphPath(newGraphPath);
   };
 
@@ -34,17 +35,40 @@ function App() {
     setEndPosition(newPosition);
   };
 
-  const handleClearClick = () => {
+  const handleResetClick = () => {
     const updatedColors = [];
 
     setCellColors(updatedColors);
     deleteAllWalls();
   };
 
+  const handleClearPathClick = () => {
+    let updatedColors = [];
+
+    for (let i = 0; i < cellColors.length; i++) {
+      if (cellColors[i]) {
+        updatedColors[i] = [];
+        for (let j = 0; j < cellColors[i].length; j++) {
+          const element = cellColors[i][j];
+          if (element !== "#397788") {
+            updatedColors[i][j] = cellColors[i][j];
+          } else {
+            updatedColors[i][j] = "#FFFFFF";
+          }
+        }
+      } else {
+        updatedColors[i] = undefined;
+      }
+    }
+
+    setCellColors(updatedColors);
+  };
+
   return (
     <div>
       <Navbar
-        onClearClick={handleClearClick}
+        onResetClick={handleResetClick}
+        onClearPathClick={handleClearPathClick}
         onGraphPathChange={handleGraphPathChange}
         getStartPosition={() => {
           return startPosition;
