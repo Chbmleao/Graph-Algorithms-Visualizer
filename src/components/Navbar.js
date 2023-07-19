@@ -35,7 +35,7 @@ const Navbar = ({ onClearClick, getStartPosition, getEndPosition }) => {
       endCoordinates: endPosition,
     };
 
-    if (algorithmSelected != "none") {
+    if (algorithmSelected !== "none") {
       const route = "http://localhost:5000/api/algorithm/" + algorithmSelected;
       executeAlgorithm(route, coordinates);
     }

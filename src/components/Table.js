@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/TableStyles.css";
 import axios from "axios";
 
@@ -85,6 +85,7 @@ const Table = ({
 
   useEffect(() => {
     getTableSize();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const isStartCell = (row, col) =>
