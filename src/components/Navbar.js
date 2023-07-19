@@ -7,7 +7,8 @@ import axios from "axios";
 import SelectBox from "./SelectBox";
 
 const Navbar = ({
-  onClearClick,
+  onResetClick,
+  onClearPathClick,
   onGraphPathChange,
   getStartPosition,
   getEndPosition,
@@ -62,9 +63,11 @@ const Navbar = ({
         <li>
           <button>Mazes</button>
         </li>
-
         <li>
-          <button onClick={onClearClick}>Clear</button>
+          <button onClick={onResetClick}>Reset</button>
+        </li>
+        <li>
+          <button onClick={onClearPathClick}>Clear Path</button>
         </li>
         <li>
           <button>Speed</button>
