@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const Graph = require("./Graph");
 
-const numTableRows = 20;
-const numTableCols = 30;
+const numTableRows = 19;
+const numTableCols = 40;
 const graph = new Graph(numTableRows, numTableCols);
 
 const app = express();
