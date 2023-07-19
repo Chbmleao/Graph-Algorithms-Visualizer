@@ -8,7 +8,10 @@ function App() {
   const [cellColors, setCellColors] = useState([]);
   const [startPosition, setStartPosition] = useState({ row: 0, col: 0 });
   const [endPosition, setEndPosition] = useState({ row: 0, col: 0 });
-  const [graphPath, setGraphPath] = useState([]);
+  const [graphPath, setGraphPath] = useState({
+    allPath: [],
+    startToEndPath: [],
+  });
 
   const deleteAllWalls = async () => {
     try {
