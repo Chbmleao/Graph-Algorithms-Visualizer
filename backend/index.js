@@ -55,11 +55,7 @@ app.post("/api/algorithm/bfs", (req, res) => {
   const startIndex = graph.getVerticeIndex(startCoordinates);
   const endIndex = graph.getVerticeIndex(endCoordinates);
 
-  const pathIndexes = graph.bfs(startIndex, endIndex);
-
-  const pathCoordinates = pathIndexes.map((index) => {
-    return graph.getVerticeCoordinates(index);
-  });
+  const pathCoordinates = graph.bfs(startIndex, endIndex);
 
   res
     .status(200)

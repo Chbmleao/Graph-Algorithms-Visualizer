@@ -136,37 +136,51 @@ class Graph {
   }
 
   bfs(start, end) {
-    let path = [];
-
-    let visited = new Array(this.numVertices);
-    for (let i = 0; i < this.numVertices; i++) {
-      visited[i] = false;
-    }
-
+    let visited = new Array(this.numVertices).fill(false);
+    let parents = new Array(this.numVertices).fill(-1);
+    let startToEndPath = [];
+    let allPath = [];
     let queue = [];
 
     visited[start] = true;
     queue.push(start);
-    let vertice = 0;
 
     while (queue.length > 0) {
-      vertice = queue[0];
-      path.push(vertice);
-      if (vertice === end) {
-        return path;
+      let currentVertice = queue.shift();
+      allPath.push(currentVertice);
+      if (currentVertice === end) {
+        break;
       }
 
-      queue.shift();
-
       for (let i = 0; i < this.numVertices; i++) {
-        if (this.matrix[vertice][i] === 1) {
-          if (!visited[i]) {
-            visited[i] = true;
-            queue.push(i);
-          }
+        if (this.matrix[currentVertice][i] === 1 && !visited[i]) {
+          visited[i] = true;
+          parents[i] = currentVertice;
+          queue.push(i);
         }
       }
     }
+
+    if (visited[end]) {
+      let currentVertice = end;
+      while (currentVertice !== -1) {
+        startToEndPath.unshift(currentVertice);
+        currentVertice = parents[currentVertice];
+      }
+    }
+
+    const allPathCoord = allPath.map((index) => {
+      return this.getVerticeCoordinates(index);
+    });
+
+    const stePathCoord = startToEndPath.map((index) => {
+      return this.getVerticeCoordinates(index);
+    });
+
+    const path = {
+      allPath: allPathCoord,
+      startToEndPath: stePathCoord,
+    };
 
     return path;
   }
