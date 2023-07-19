@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/TableStyles.css";
 import axios from "axios";
 
-import DraggableIcon from "./Icon";
+import Icon from "./Icon";
 
 const Table = ({
   cellColors,
@@ -11,6 +11,7 @@ const Table = ({
   endPosition,
   onStartPositionChange,
   onEndPositionChange,
+  graphPath,
 }) => {
   const [numTableRows, setNumTableRows] = useState(0);
   const [numTableCols, setNumTableCols] = useState(0);
@@ -87,6 +88,29 @@ const Table = ({
     getTableSize();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const drawPath = (index, cellColors) => {
+      if (index >= graphPath.length) return;
+
+      setTimeout(() => {
+        if (graphPath && graphPath.length > 0) {
+          let updatedColors = [...cellColors];
+
+          const { row, col } = graphPath[index];
+
+          updatedColors[row] = updatedColors[row] || [];
+          updatedColors[row][col] = "#397788";
+          setCellColors(updatedColors);
+
+          drawPath(index + 1, updatedColors);
+        }
+      }, 20);
+    };
+
+    drawPath(0, cellColors);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [graphPath]);
 
   const isStartCell = (row, col) =>
     true ? row === startPosition.row && col === startPosition.col : false;
@@ -172,7 +196,7 @@ const Table = ({
 
     let icon = "";
     if (isStart || isEnd) {
-      icon = <DraggableIcon isStart={isStart} />;
+      icon = <Icon isStart={isStart} />;
     }
     return (
       <td
