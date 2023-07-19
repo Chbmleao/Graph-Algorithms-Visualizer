@@ -50,8 +50,8 @@ const Table = ({
   const postWall = async (row, col) => {
     try {
       const data = {
-        i: row,
-        j: col,
+        row: row,
+        col: col,
       };
 
       const response = await axios.post(
@@ -68,8 +68,8 @@ const Table = ({
   const deleteWall = async (row, col) => {
     try {
       const data = {
-        i: row,
-        j: col,
+        row: row,
+        col: col,
       };
 
       const response = await axios.delete(
