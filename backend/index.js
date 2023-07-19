@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const Graph = require("./Graph");
 
-const numTableRows = 4;
-const numTableCols = 4;
+const numTableRows = 20;
+const numTableCols = 30;
 const graph = new Graph(numTableRows, numTableCols);
 
 const app = express();
@@ -55,9 +55,15 @@ app.post("/api/algorithm/bfs", (req, res) => {
   const startIndex = graph.getVerticeIndex(startCoordinates);
   const endIndex = graph.getVerticeIndex(endCoordinates);
 
-  const path = graph.bfs(startIndex, endIndex);
+  const pathIndexes = graph.bfs(startIndex, endIndex);
 
-  res.status(200).json({ message: "BFS algorithm executed", path: path });
+  const pathCoordinates = pathIndexes.map((index) => {
+    return graph.getVerticeCoordinates(index);
+  });
+
+  res
+    .status(200)
+    .json({ message: "BFS algorithm executed", path: pathCoordinates });
 });
 
 app.post("/api/algorithm/dfs", (req, res) => {
