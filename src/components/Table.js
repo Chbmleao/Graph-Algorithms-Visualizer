@@ -90,25 +90,50 @@ const Table = ({
   }, []);
 
   useEffect(() => {
-    const drawPath = (index, cellColors) => {
-      if (index >= graphPath.length) return;
+    const allPath = graphPath.allPath;
+    const startToEndPath = graphPath.startToEndPath;
+
+    const drawStartToEndPath = (index, cellColors) => {
+      if (index >= startToEndPath.length) return;
 
       setTimeout(() => {
-        if (graphPath && graphPath.length > 0) {
+        if (startToEndPath && startToEndPath.length > 0) {
           let updatedColors = [...cellColors];
 
-          const { row, col } = graphPath[index];
+          const { row, col } = startToEndPath[index];
+
+          updatedColors[row] = updatedColors[row] || [];
+          updatedColors[row][col] = "#FFC300";
+          setCellColors(updatedColors);
+
+          drawStartToEndPath(index + 1, updatedColors);
+        }
+      }, 100);
+    };
+
+    const drawAllPath = (index, cellColors) => {
+      if (index >= allPath.length) {
+        drawStartToEndPath(0, cellColors);
+        return;
+      }
+
+      setTimeout(() => {
+        if (allPath && allPath.length > 0) {
+          let updatedColors = [...cellColors];
+
+          const { row, col } = allPath[index];
 
           updatedColors[row] = updatedColors[row] || [];
           updatedColors[row][col] = "#397788";
           setCellColors(updatedColors);
 
-          drawPath(index + 1, updatedColors);
+          drawAllPath(index + 1, updatedColors);
         }
       }, 20);
     };
 
-    drawPath(0, cellColors);
+    drawAllPath(0, cellColors);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [graphPath]);
 
