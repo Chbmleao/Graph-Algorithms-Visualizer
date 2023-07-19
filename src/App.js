@@ -53,7 +53,7 @@ function App() {
         updatedColors[i] = [];
         for (let j = 0; j < cellColors[i].length; j++) {
           const element = cellColors[i][j];
-          if (element !== "#397788") {
+          if (element !== "#397788" && element !== "#FFC300") {
             updatedColors[i][j] = cellColors[i][j];
           } else {
             updatedColors[i][j] = "#FFFFFF";
