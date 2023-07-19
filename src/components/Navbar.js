@@ -6,7 +6,12 @@ import axios from "axios";
 
 import SelectBox from "./SelectBox";
 
-const Navbar = ({ onClearClick, getStartPosition, getEndPosition }) => {
+const Navbar = ({
+  onClearClick,
+  onGraphPathChange,
+  getStartPosition,
+  getEndPosition,
+}) => {
   const [algorithmSelected, setAlgorithmSelected] = useState("none");
 
   const handleAlgorithmSelect = (algorithm) => {
@@ -19,7 +24,8 @@ const Navbar = ({ onClearClick, getStartPosition, getEndPosition }) => {
         coordinates,
       };
       const response = await axios.post(route, data);
-      console.log("Execute Algorithm Response:", response.data);
+      console.log("Execute Algorithm Response:", response.data.message);
+      onGraphPathChange(response.data.path);
     } catch (error) {
       console.error("Execute Algorithm Error", error);
       throw error;
