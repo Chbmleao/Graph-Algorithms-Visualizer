@@ -8,6 +8,7 @@ function App() {
   const [cellColors, setCellColors] = useState([]);
   const [startPosition, setStartPosition] = useState({ row: 0, col: 0 });
   const [endPosition, setEndPosition] = useState({ row: 0, col: 0 });
+  const [graphPath, setGraphPath] = useState([]);
 
   const deleteAllWalls = async () => {
     try {
@@ -19,6 +20,10 @@ function App() {
       console.error("Delete All Walls Error", error);
       throw error;
     }
+  };
+
+  const handleGraphPathChange = (newGraphPath) => {
+    setGraphPath(newGraphPath);
   };
 
   const handleStartPositionChange = (newPosition) => {
@@ -40,6 +45,7 @@ function App() {
     <div>
       <Navbar
         onClearClick={handleClearClick}
+        onGraphPathChange={handleGraphPathChange}
         getStartPosition={() => {
           return startPosition;
         }}
@@ -54,6 +60,7 @@ function App() {
         endPosition={endPosition}
         onStartPositionChange={handleStartPositionChange}
         onEndPositionChange={handleEndPositionChange}
+        graphPath={graphPath}
       />
     </div>
   );
