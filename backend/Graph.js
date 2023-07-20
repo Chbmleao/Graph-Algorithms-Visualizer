@@ -191,6 +191,52 @@ class Graph {
     return path;
   }
 
+  dfsAux(vertice, visited, allPath, startToEndPath, end) {
+    visited[vertice] = true;
+    allPath.push(vertice);
+    startToEndPath.push(vertice);
+
+    for (let i = 0; i < this.numVertices; i++) {
+      if (startToEndPath[startToEndPath.length - 1] === end) {
+        return;
+      }
+      if (this.matrix[vertice][i] === 1) {
+        let n = i;
+        if (!visited[n]) {
+          this.dfsAux(n, visited, allPath, startToEndPath, end);
+        }
+      }
+    }
+
+    if (startToEndPath[startToEndPath.length - 1] !== end) {
+      startToEndPath.pop();
+    }
+  }
+
+  dfs(start, end) {
+    let visited = new Array(this.numVertices).fill(false);
+
+    let startToEndPath = [];
+    let allPath = [];
+
+    this.dfsAux(start, visited, allPath, startToEndPath, end);
+
+    const allPathCoord = allPath.map((index) => {
+      return this.getVerticeCoordinates(index);
+    });
+
+    const stePathCoord = startToEndPath.map((index) => {
+      return this.getVerticeCoordinates(index);
+    });
+
+    const path = {
+      allPath: allPathCoord,
+      startToEndPath: stePathCoord,
+    };
+
+    return path;
+  }
+
   dijkstra(src) {
     let dist = new Array(this.numVertices);
     let sptSet = new Array(this.numVertices);
