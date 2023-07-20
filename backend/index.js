@@ -18,6 +18,14 @@ app.post("/api/addWall", (req, res) => {
   res.status(200).json({ message: "Wall added successfully" });
 });
 
+app.post("/api/addWalls", (req, res) => {
+  const wallsCoordinates = req.body.wallsCoordinates;
+
+  graph.addWalls(wallsCoordinates);
+
+  res.status(200).json({ message: "Walls added successfully" });
+});
+
 app.delete("/api/removeWall", (req, res) => {
   const wallCoordinates = req.body;
 
