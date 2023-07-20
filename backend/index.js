@@ -76,7 +76,11 @@ app.post("/api/algorithm/dfs", (req, res) => {
   const startIndex = graph.getVerticeIndex(startCoordinates);
   const endIndex = graph.getVerticeIndex(endCoordinates);
 
-  res.status(200).json({ message: "DFS algorithm executed" });
+  const pathCoordinates = graph.dfs(startIndex, endIndex);
+
+  res
+    .status(200)
+    .json({ message: "DFS algorithm executed", path: pathCoordinates });
 });
 
 const PORT = 5000;
