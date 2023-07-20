@@ -12,6 +12,8 @@ const Table = ({
   onStartPositionChange,
   onEndPositionChange,
   graphPath,
+  isVisualizing,
+  setIsVisualizing,
 }) => {
   const [numTableRows, setNumTableRows] = useState(0);
   const [numTableCols, setNumTableCols] = useState(0);
@@ -58,7 +60,10 @@ const Table = ({
     const startToEndPath = graphPath.startToEndPath;
 
     const drawStartToEndPath = (index, cellColors) => {
-      if (index >= startToEndPath.length) return;
+      if (index >= startToEndPath.length) {
+        setIsVisualizing(false);
+        return;
+      }
 
       setTimeout(() => {
         if (startToEndPath && startToEndPath.length > 0) {
@@ -122,33 +127,37 @@ const Table = ({
   };
 
   const handleCellMouseDown = (rowIndex, cellIndex) => {
-    if (isStartCell(rowIndex, cellIndex)) {
-      setIsMouseDown(true);
-      setIsDraggingStart(true);
-    } else if (isEndCell(rowIndex, cellIndex)) {
-      setIsMouseDown(true);
-      setIsDraggingEnd(true);
-    } else {
-      setIsMouseDown(true);
-      changeCellColor(rowIndex, cellIndex);
+    if (!isVisualizing) {
+      if (isStartCell(rowIndex, cellIndex)) {
+        setIsMouseDown(true);
+        setIsDraggingStart(true);
+      } else if (isEndCell(rowIndex, cellIndex)) {
+        setIsMouseDown(true);
+        setIsDraggingEnd(true);
+      } else {
+        setIsMouseDown(true);
+        changeCellColor(rowIndex, cellIndex);
+      }
     }
   };
 
   const handleCellMouseEnter = (rowIndex, cellIndex) => {
-    if (isMouseDown && !isDraggingStart && !isDraggingEnd) {
-      changeCellColor(rowIndex, cellIndex);
-    }
-    if (isDraggingStart || isDraggingEnd) {
-      const newPosition = { row: rowIndex, col: cellIndex };
-
-      if (isDraggingStart) {
-        onStartPositionChange(newPosition);
-      } else {
-        onEndPositionChange(newPosition);
-      }
-
-      if (cellColors[rowIndex]?.[cellIndex] === "#884A39") {
+    if (!isVisualizing) {
+      if (isMouseDown && !isDraggingStart && !isDraggingEnd) {
         changeCellColor(rowIndex, cellIndex);
+      }
+      if (isDraggingStart || isDraggingEnd) {
+        const newPosition = { row: rowIndex, col: cellIndex };
+
+        if (isDraggingStart) {
+          onStartPositionChange(newPosition);
+        } else {
+          onEndPositionChange(newPosition);
+        }
+
+        if (cellColors[rowIndex]?.[cellIndex] === "#884A39") {
+          changeCellColor(rowIndex, cellIndex);
+        }
       }
     }
   };
