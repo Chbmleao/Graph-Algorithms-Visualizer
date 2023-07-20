@@ -12,6 +12,7 @@ function App() {
     allPath: [],
     startToEndPath: [],
   });
+  const [algorithmSelected, setAlgorithmSelected] = useState("none");
 
   const deleteAllWalls = async () => {
     try {
@@ -21,6 +22,23 @@ function App() {
       console.log("Delete All Walls Response:", response.data);
     } catch (error) {
       console.error("Delete All Walls Error", error);
+      throw error;
+    }
+  };
+
+  const postWalls = async (wallsCoordinates) => {
+    try {
+      const data = {
+        wallsCoordinates,
+      };
+
+      const response = await axios.post(
+        "http://localhost:5000/api/addWalls",
+        data
+      );
+      console.log("Post Walls Response:", response.data);
+    } catch (error) {
+      console.error("Post Wall Error", error);
       throw error;
     }
   };
@@ -43,6 +61,59 @@ function App() {
 
     setCellColors(updatedColors);
     deleteAllWalls();
+  };
+
+  const handleAlgorithmSelect = (algorithm) => {
+    setAlgorithmSelected(algorithm);
+  };
+
+  const executeAlgorithm = async (route, coordinates) => {
+    try {
+      await equalityGraphTable();
+
+      const data = {
+        coordinates,
+      };
+      const response = await axios.post(route, data);
+      console.log("Execute Algorithm Response:", response.data.message);
+      handleGraphPathChange(response.data.path);
+    } catch (error) {
+      console.error("Execute Algorithm Error", error);
+      throw error;
+    }
+  };
+
+  const equalityGraphTable = async () => {
+    await deleteAllWalls();
+    let wallsCoordinates = [];
+
+    for (let i = 0; i < cellColors.length; i++) {
+      if (cellColors[i]) {
+        for (let j = 0; j < cellColors[i].length; j++) {
+          const element = cellColors[i][j];
+          if (element === "#884A39") {
+            wallsCoordinates.push({
+              row: i,
+              col: j,
+            });
+          }
+        }
+      }
+    }
+
+    postWalls(wallsCoordinates);
+  };
+
+  const handleVisualizeClick = () => {
+    const coordinates = {
+      startCoordinates: startPosition,
+      endCoordinates: endPosition,
+    };
+
+    if (algorithmSelected !== "none") {
+      const route = "http://localhost:5000/api/algorithm/" + algorithmSelected;
+      executeAlgorithm(route, coordinates);
+    }
   };
 
   const handleClearPathClick = () => {
@@ -72,13 +143,8 @@ function App() {
       <Navbar
         onResetClick={handleResetClick}
         onClearPathClick={handleClearPathClick}
-        onGraphPathChange={handleGraphPathChange}
-        getStartPosition={() => {
-          return startPosition;
-        }}
-        getEndPosition={() => {
-          return endPosition;
-        }}
+        onVisualizeClick={handleVisualizeClick}
+        onAlgorithmSelect={handleAlgorithmSelect}
       />
       <Table
         cellColors={cellColors}
