@@ -9,45 +9,9 @@ import SelectBox from "./SelectBox";
 const Navbar = ({
   onResetClick,
   onClearPathClick,
-  onGraphPathChange,
-  getStartPosition,
-  getEndPosition,
+  onVisualizeClick,
+  onAlgorithmSelect,
 }) => {
-  const [algorithmSelected, setAlgorithmSelected] = useState("none");
-
-  const handleAlgorithmSelect = (algorithm) => {
-    setAlgorithmSelected(algorithm);
-  };
-
-  const executeAlgorithm = async (route, coordinates) => {
-    try {
-      const data = {
-        coordinates,
-      };
-      const response = await axios.post(route, data);
-      console.log("Execute Algorithm Response:", response.data.message);
-      onGraphPathChange(response.data.path);
-    } catch (error) {
-      console.error("Execute Algorithm Error", error);
-      throw error;
-    }
-  };
-
-  const handleVisualizeClick = () => {
-    const startPosition = getStartPosition();
-    const endPosition = getEndPosition();
-
-    const coordinates = {
-      startCoordinates: startPosition,
-      endCoordinates: endPosition,
-    };
-
-    if (algorithmSelected !== "none") {
-      const route = "http://localhost:5000/api/algorithm/" + algorithmSelected;
-      executeAlgorithm(route, coordinates);
-    }
-  };
-
   return (
     <div className="header">
       <Link to="/">
@@ -55,10 +19,10 @@ const Navbar = ({
       </Link>
       <ul className="nav-menu">
         <li>
-          <SelectBox onAlgorithmSelect={handleAlgorithmSelect} />
+          <SelectBox onAlgorithmSelect={onAlgorithmSelect} />
         </li>
         <li>
-          <button onClick={handleVisualizeClick}>Visualize</button>
+          <button onClick={onVisualizeClick}>Visualize</button>
         </li>
         <li>
           <button>Mazes</button>
