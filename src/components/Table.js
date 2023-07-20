@@ -48,42 +48,6 @@ const Table = ({
     }
   };
 
-  const postWall = async (row, col) => {
-    try {
-      const data = {
-        row: row,
-        col: col,
-      };
-
-      const response = await axios.post(
-        "http://localhost:5000/api/addWall",
-        data
-      );
-      console.log("Post Wall Response:", response.data);
-    } catch (error) {
-      console.error("Post Wall Error", error);
-      throw error;
-    }
-  };
-
-  const deleteWall = async (row, col) => {
-    try {
-      const data = {
-        row: row,
-        col: col,
-      };
-
-      const response = await axios.delete(
-        "http://localhost:5000/api/removeWall",
-        { data }
-      );
-      console.log("Delete Wall Response:", response.data);
-    } catch (error) {
-      console.error("Delete Wall Error", error);
-      throw error;
-    }
-  };
-
   useEffect(() => {
     getTableSize();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -151,12 +115,6 @@ const Table = ({
         updatedColors[rowIndex][cellIndex] = toggleColor(
           updatedColors[rowIndex]?.[cellIndex]
         );
-
-        if (updatedColors[rowIndex][cellIndex] === "#884A39") {
-          postWall(rowIndex, cellIndex);
-        } else {
-          deleteWall(rowIndex, cellIndex);
-        }
 
         return updatedColors;
       });
