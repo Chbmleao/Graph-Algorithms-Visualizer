@@ -108,6 +108,12 @@ class Graph {
     });
   }
 
+  addWalls(verticesCoordinates) {
+    verticesCoordinates.forEach((item, index) => {
+      this.addWall(item);
+    });
+  }
+
   removeWall(verticeCoordinates) {
     const neighborhood = this.findNeighborhood(verticeCoordinates);
 
