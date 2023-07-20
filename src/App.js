@@ -13,6 +13,7 @@ function App() {
     startToEndPath: [],
   });
   const [algorithmSelected, setAlgorithmSelected] = useState("none");
+  const [isVisualizing, setIsVisualizing] = useState(false);
 
   const deleteAllWalls = async () => {
     try {
@@ -49,18 +50,24 @@ function App() {
   };
 
   const handleStartPositionChange = (newPosition) => {
-    setStartPosition(newPosition);
+    if (!isVisualizing) {
+      setStartPosition(newPosition);
+    }
   };
 
   const handleEndPositionChange = (newPosition) => {
-    setEndPosition(newPosition);
+    if (!isVisualizing) {
+      setEndPosition(newPosition);
+    }
   };
 
   const handleResetClick = () => {
-    const updatedColors = [];
+    if (!isVisualizing) {
+      const updatedColors = [];
 
-    setCellColors(updatedColors);
-    deleteAllWalls();
+      setCellColors(updatedColors);
+      deleteAllWalls();
+    }
   };
 
   const handleAlgorithmSelect = (algorithm) => {
@@ -110,9 +117,14 @@ function App() {
       endCoordinates: endPosition,
     };
 
-    if (algorithmSelected !== "none") {
-      const route = "http://localhost:5000/api/algorithm/" + algorithmSelected;
-      executeAlgorithm(route, coordinates);
+    if (!isVisualizing) {
+      setIsVisualizing(true);
+
+      if (algorithmSelected !== "none") {
+        const route =
+          "http://localhost:5000/api/algorithm/" + algorithmSelected;
+        executeAlgorithm(route, coordinates);
+      }
     }
   };
 
@@ -154,6 +166,8 @@ function App() {
         onStartPositionChange={handleStartPositionChange}
         onEndPositionChange={handleEndPositionChange}
         graphPath={graphPath}
+        isVisualizing={isVisualizing}
+        setIsVisualizing={setIsVisualizing}
       />
     </div>
   );
