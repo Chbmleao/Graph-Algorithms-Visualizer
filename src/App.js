@@ -14,6 +14,7 @@ function App() {
   });
   const [algorithmSelected, setAlgorithmSelected] = useState("none");
   const [isVisualizing, setIsVisualizing] = useState(false);
+  const [speed, setSpeed] = useState(10);
 
   const deleteAllWalls = async () => {
     try {
@@ -150,6 +151,20 @@ function App() {
     setCellColors(updatedColors);
   };
 
+  const handleSpeedIncrement = () => {
+    if (speed < 10) {
+      const newSpeed = speed + 1;
+      setSpeed(newSpeed);
+    }
+  };
+
+  const handleSpeedDecrement = () => {
+    if (speed > 1) {
+      const newSpeed = speed - 1;
+      setSpeed(newSpeed);
+    }
+  };
+
   return (
     <div>
       <Navbar
@@ -157,6 +172,9 @@ function App() {
         onClearPathClick={handleClearPathClick}
         onVisualizeClick={handleVisualizeClick}
         onAlgorithmSelect={handleAlgorithmSelect}
+        speed={speed}
+        onSpeedIncrement={handleSpeedIncrement}
+        onSpeedDecrement={handleSpeedDecrement}
       />
       <Table
         cellColors={cellColors}
