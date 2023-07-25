@@ -14,6 +14,7 @@ const Navbar = ({
   speed,
   onSpeedIncrement,
   onSpeedDecrement,
+  onMazeClick,
 }) => {
   return (
     <div className="header">
@@ -28,7 +29,7 @@ const Navbar = ({
           <button onClick={onVisualizeClick}>Visualize</button>
         </li>
         <li>
-          <button>Mazes</button>
+          <button onClick={onMazeClick}>Maze</button>
         </li>
         <li>
           <button onClick={onResetClick}>Reset</button>
