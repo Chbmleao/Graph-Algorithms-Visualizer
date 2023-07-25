@@ -4,12 +4,16 @@ import "../styles/NavbarStyles.css";
 import React from "react";
 
 import SelectBox from "./SelectBox";
+import SpeedCounter from "./SpeedCounter";
 
 const Navbar = ({
   onResetClick,
   onClearPathClick,
   onVisualizeClick,
   onAlgorithmSelect,
+  speed,
+  onSpeedIncrement,
+  onSpeedDecrement,
 }) => {
   return (
     <div className="header">
@@ -33,7 +37,11 @@ const Navbar = ({
           <button onClick={onClearPathClick}>Clear Path</button>
         </li>
         <li>
-          <button>Speed</button>
+          <SpeedCounter
+            speed={speed}
+            onSpeedIncrement={onSpeedIncrement}
+            onSpeedDecrement={onSpeedDecrement}
+          />
         </li>
       </ul>
     </div>
