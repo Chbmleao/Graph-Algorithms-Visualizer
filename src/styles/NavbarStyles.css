@@ -23,7 +23,7 @@
 
 .nav-menu {
   display: flex;
-  gap: 3rem;
+  gap: 2rem;
 }
 
 .nav-menu li {
@@ -35,6 +35,7 @@
 
 .nav-menu button {
   font-size: 1.3rem;
+  font-weight: 400;
   text-decoration: none;
   color: white;
 }
