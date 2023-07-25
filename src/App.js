@@ -14,7 +14,7 @@ function App() {
   });
   const [algorithmSelected, setAlgorithmSelected] = useState("none");
   const [isVisualizing, setIsVisualizing] = useState(false);
-  const [speed, setSpeed] = useState(10);
+  const [speed, setSpeed] = useState(5);
 
   const deleteAllWalls = async () => {
     try {
@@ -152,14 +152,14 @@ function App() {
   };
 
   const handleSpeedIncrement = () => {
-    if (speed < 10) {
+    if (speed < 10 && !isVisualizing) {
       const newSpeed = speed + 1;
       setSpeed(newSpeed);
     }
   };
 
   const handleSpeedDecrement = () => {
-    if (speed > 1) {
+    if (speed > 1 && !isVisualizing) {
       const newSpeed = speed - 1;
       setSpeed(newSpeed);
     }
@@ -186,6 +186,7 @@ function App() {
         graphPath={graphPath}
         isVisualizing={isVisualizing}
         setIsVisualizing={setIsVisualizing}
+        speed={speed}
       />
     </div>
   );
