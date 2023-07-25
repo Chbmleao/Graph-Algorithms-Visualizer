@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 
 import Navbar from "./components/Navbar";
@@ -15,6 +15,7 @@ function App() {
   const [algorithmSelected, setAlgorithmSelected] = useState("none");
   const [isVisualizing, setIsVisualizing] = useState(false);
   const [speed, setSpeed] = useState(5);
+  const tableRef = useRef();
 
   const deleteAllWalls = async () => {
     try {
@@ -165,6 +166,12 @@ function App() {
     }
   };
 
+  const handleMazeClick = async () => {
+    if (!isVisualizing) {
+      tableRef.current.createRandomMaze();
+    }
+  };
+
   return (
     <div>
       <Navbar
@@ -175,6 +182,7 @@ function App() {
         speed={speed}
         onSpeedIncrement={handleSpeedIncrement}
         onSpeedDecrement={handleSpeedDecrement}
+        onMazeClick={handleMazeClick}
       />
       <Table
         cellColors={cellColors}
@@ -187,6 +195,7 @@ function App() {
         isVisualizing={isVisualizing}
         setIsVisualizing={setIsVisualizing}
         speed={speed}
+        ref={tableRef}
       />
     </div>
   );
