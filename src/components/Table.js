@@ -14,6 +14,7 @@ const Table = ({
   graphPath,
   isVisualizing,
   setIsVisualizing,
+  speed,
 }) => {
   const [numTableRows, setNumTableRows] = useState(0);
   const [numTableCols, setNumTableCols] = useState(0);
@@ -55,6 +56,11 @@ const Table = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const getTimeoutValue = () => {
+    const maxValue = 50;
+    return maxValue - 5 * speed;
+  };
+
   useEffect(() => {
     const allPath = graphPath.allPath;
     const startToEndPath = graphPath.startToEndPath;
@@ -77,7 +83,7 @@ const Table = ({
 
           drawStartToEndPath(index + 1, updatedColors);
         }
-      }, 100);
+      }, getTimeoutValue() * 1.5);
     };
 
     const drawAllPath = (index, cellColors) => {
@@ -98,7 +104,7 @@ const Table = ({
 
           drawAllPath(index + 1, updatedColors);
         }
-      }, 20);
+      }, getTimeoutValue());
     };
 
     drawAllPath(0, cellColors);
