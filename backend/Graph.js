@@ -128,17 +128,21 @@ class Graph {
     this.addAllNeighbors();
   }
 
-  minDistance(dist, sptSet) {
-    let min = Number.MAX_VALUE;
-    let minIndex = -1;
+  getReturnPathCoordinates(allPath, startToEndPath) {
+    const allPathCoord = allPath.map((index) => {
+      return this.getVerticeCoordinates(index);
+    });
 
-    for (let v = 0; v < this.numVertices; v++) {
-      if (sptSet[v] == false && dist[v] <= min) {
-        min = dist[v];
-        minIndex = v;
-      }
-    }
-    return minIndex;
+    const stePathCoord = startToEndPath.map((index) => {
+      return this.getVerticeCoordinates(index);
+    });
+
+    const path = {
+      allPath: allPathCoord,
+      startToEndPath: stePathCoord,
+    };
+
+    return path;
   }
 
   bfs(start, end) {
@@ -175,18 +179,7 @@ class Graph {
       }
     }
 
-    const allPathCoord = allPath.map((index) => {
-      return this.getVerticeCoordinates(index);
-    });
-
-    const stePathCoord = startToEndPath.map((index) => {
-      return this.getVerticeCoordinates(index);
-    });
-
-    const path = {
-      allPath: allPathCoord,
-      startToEndPath: stePathCoord,
-    };
+    const path = this.getReturnPathCoordinates(allPath, startToEndPath);
 
     return path;
   }
@@ -221,36 +214,38 @@ class Graph {
 
     this.dfsAux(start, visited, allPath, startToEndPath, end);
 
-    const allPathCoord = allPath.map((index) => {
-      return this.getVerticeCoordinates(index);
-    });
-
-    const stePathCoord = startToEndPath.map((index) => {
-      return this.getVerticeCoordinates(index);
-    });
-
-    const path = {
-      allPath: allPathCoord,
-      startToEndPath: stePathCoord,
-    };
+    const path = this.getReturnPathCoordinates(allPath, startToEndPath);
 
     return path;
   }
 
-  dijkstra(src) {
-    let dist = new Array(this.numVertices);
-    let sptSet = new Array(this.numVertices);
+  minDistance(dist, sptSet) {
+    let min = Number.MAX_VALUE;
+    let minIndex = -1;
 
-    for (let i = 0; i < this.numVertices; i++) {
-      dist[i] = Number.MAX_VALUE;
-      sptSet[i] = false;
+    for (let v = 0; v < this.numVertices; v++) {
+      if (sptSet[v] === false && dist[v] <= min) {
+        min = dist[v];
+        minIndex = v;
+      }
     }
+    return minIndex;
+  }
 
-    dist[src] = 0;
+  dijkstra(start, end) {
+    let dist = new Array(this.numVertices).fill(Number.MAX_VALUE);
+    let sptSet = new Array(this.numVertices).fill(false);
+
+    let allPath = [];
+    let startToEndPath = [];
+
+    dist[start] = 0;
 
     for (let count = 0; count < this.numVertices - 1; count++) {
       let u = this.minDistance(dist, sptSet);
       sptSet[u] = true;
+      allPath.push(u);
+      startToEndPath.push(u);
 
       for (let v = 0; v < this.numVertices; v++) {
         if (
@@ -264,7 +259,8 @@ class Graph {
       }
     }
 
-    this.printSolution(dist);
+    const path = this.getReturnPathCoordinates(allPath, startToEndPath);
+    return path;
   }
 
   printSolution(dist) {
