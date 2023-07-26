@@ -235,6 +235,7 @@ class Graph {
   dijkstra(start, end) {
     let dist = new Array(this.numVertices).fill(Number.MAX_VALUE);
     let sptSet = new Array(this.numVertices).fill(false);
+    let parent = new Array(this.numVertices).fill(-1);
 
     let allPath = [];
     let startToEndPath = [];
@@ -245,7 +246,10 @@ class Graph {
       let u = this.minDistance(dist, sptSet);
       sptSet[u] = true;
       allPath.push(u);
-      startToEndPath.push(u);
+
+      if (u === end) {
+        break;
+      }
 
       for (let v = 0; v < this.numVertices; v++) {
         if (
@@ -255,8 +259,15 @@ class Graph {
           dist[u] + this.matrix[u][v] < dist[v]
         ) {
           dist[v] = dist[u] + this.matrix[u][v];
+          parent[v] = u;
         }
       }
+    }
+
+    let currentVertex = end;
+    while (currentVertex != -1) {
+      startToEndPath.unshift(currentVertex);
+      currentVertex = parent[currentVertex];
     }
 
     const path = this.getReturnPathCoordinates(allPath, startToEndPath);
