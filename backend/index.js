@@ -52,9 +52,11 @@ app.post("/api/algorithm/dijkstra", (req, res) => {
   const startIndex = graph.getVerticeIndex(startCoordinates);
   const endIndex = graph.getVerticeIndex(endCoordinates);
 
-  const dists = graph.dijkstra(startIndex);
+  const pathCoordinates = graph.dijkstra(startIndex, endIndex);
 
-  res.status(200).json({ message: "Dijkstra algorithm executed" });
+  res
+    .status(200)
+    .json({ message: "Dijkstra algorithm executed", path: pathCoordinates });
 });
 
 app.post("/api/algorithm/bfs", (req, res) => {
