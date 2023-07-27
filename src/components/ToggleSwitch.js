@@ -4,11 +4,12 @@ import React, { useState } from "react";
 
 import { TbWall, TbWeight } from "react-icons/tb";
 
-const ToggleSwitch = () => {
+const ToggleSwitch = ({ onToggleSwitchClick }) => {
   const [weightSelected, setWeightSelected] = useState(false);
 
   const handleToggleSwitchClick = () => {
     setWeightSelected(!weightSelected);
+    onToggleSwitchClick();
   };
 
   return (
