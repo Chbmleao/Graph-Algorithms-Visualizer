@@ -23,3 +23,24 @@
   box-sizing: border-box;
   margin: -1.5px -1.5px;
 }
+
+.weight-icon {
+  color: #4a3988;
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.weight-svg {
+  width: 100%;
+  height: auto;
+}
+
+.weight-number {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-size: 0.8rem;
+}
