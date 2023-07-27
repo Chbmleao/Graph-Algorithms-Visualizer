@@ -8,6 +8,12 @@ import "../styles/TableStyles.css";
 import axios from "axios";
 
 import Icon from "./Icon";
+import { TbWeight } from "react-icons/tb";
+
+const WHITE_HEX = "#FFFFFF";
+const BROWN_HEX = "#884A39";
+const BLUE_HEX = "#397788";
+const YELLOW_HEX = "#FFC300";
 
 const Table = forwardRef(
   (
@@ -112,7 +118,7 @@ const Table = forwardRef(
             const { row, col } = startToEndPath[index];
 
             updatedColors[row] = updatedColors[row] || [];
-            updatedColors[row][col] = "#FFC300";
+            updatedColors[row][col] = YELLOW_HEX;
             setCellColors(updatedColors);
 
             drawStartToEndPath(index + 1, updatedColors);
@@ -133,7 +139,7 @@ const Table = forwardRef(
             const { row, col } = allPath[index];
 
             updatedColors[row] = updatedColors[row] || [];
-            updatedColors[row][col] = "#397788";
+            updatedColors[row][col] = BLUE_HEX;
             setCellColors(updatedColors);
 
             drawAllPath(index + 1, updatedColors);
@@ -164,6 +170,10 @@ const Table = forwardRef(
             updatedColors[rowIndex]?.[cellIndex]
           );
 
+          if (updatedColors[rowIndex][cellIndex] === BROWN_HEX) {
+            removeCellWeight(rowIndex, cellIndex);
+          }
+
           return updatedColors;
         });
       }
@@ -185,6 +195,17 @@ const Table = forwardRef(
           }
         }
 
+        return updatedWeights;
+      });
+    };
+
+    const removeCellWeight = (rowIndex, cellIndex) => {
+      setCellWeights((prevWeights) => {
+        const updatedWeights = [...prevWeights];
+        updatedWeights[rowIndex] = updatedWeights[rowIndex] || [];
+        if (updatedWeights[rowIndex][cellIndex]) {
+          updatedWeights[rowIndex][cellIndex] = 1;
+        }
         return updatedWeights;
       });
     };
@@ -222,7 +243,7 @@ const Table = forwardRef(
           onEndPositionChange(newPosition);
         }
 
-        if (cellColors[rowIndex]?.[cellIndex] === "#884A39") {
+        if (cellColors[rowIndex]?.[cellIndex] === BROWN_HEX) {
           changeCellColor(rowIndex, cellIndex);
         }
       }
@@ -235,13 +256,15 @@ const Table = forwardRef(
     };
 
     const toggleColor = (currentColor) => {
-      return currentColor === "#884A39" ? "#FFFFFF" : "#884A39";
+      return currentColor === BROWN_HEX ? WHITE_HEX : BROWN_HEX;
     };
 
     const tableCellConstructor = (row, col) => {
       const cellStyle = {
-        backgroundColor: cellColors[row]?.[col] || "#FFFFFF",
+        backgroundColor: cellColors[row]?.[col] || WHITE_HEX,
       };
+
+      const hasWeight = cellWeights[row]?.[col] > 1;
 
       const isStart = isStartCell(row, col);
       const isEnd = isEndCell(row, col);
@@ -249,6 +272,13 @@ const Table = forwardRef(
       let icon = "";
       if (isStart || isEnd) {
         icon = <Icon isStart={isStart} />;
+      } else if (hasWeight) {
+        icon = (
+          <div className="weight-icon">
+            <TbWeight className="weight-svg" />
+            <h4 className="weight-number">{cellWeights[row]?.[col]}</h4>
+          </div>
+        );
       }
       return (
         <td
