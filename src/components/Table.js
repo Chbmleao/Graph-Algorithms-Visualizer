@@ -14,6 +14,8 @@ const Table = forwardRef(
     {
       cellColors,
       setCellColors,
+      cellWeights,
+      setCellWeights,
       startPosition,
       endPosition,
       onStartPositionChange,
@@ -22,6 +24,7 @@ const Table = forwardRef(
       isVisualizing,
       setIsVisualizing,
       speed,
+      isWeightSelected,
     },
     ref
   ) => {
@@ -166,38 +169,61 @@ const Table = forwardRef(
       }
     };
 
+    const changeCellWeight = (rowIndex, cellIndex, isIncreasing) => {
+      setCellWeights((prevWeights) => {
+        const updatedWeights = [...prevWeights];
+        updatedWeights[rowIndex] = updatedWeights[rowIndex] || [];
+        if (isIncreasing) {
+          if (updatedWeights[rowIndex][cellIndex]) {
+            updatedWeights[rowIndex][cellIndex] += 1;
+          } else {
+            updatedWeights[rowIndex][cellIndex] = 2;
+          }
+        } else {
+          if (updatedWeights[rowIndex][cellIndex] > 1) {
+            updatedWeights[rowIndex][cellIndex] -= 1;
+          }
+        }
+
+        return updatedWeights;
+      });
+    };
+
     const handleCellMouseDown = (rowIndex, cellIndex) => {
       if (!isVisualizing) {
+        setIsMouseDown(true);
         if (isStartCell(rowIndex, cellIndex)) {
-          setIsMouseDown(true);
           setIsDraggingStart(true);
         } else if (isEndCell(rowIndex, cellIndex)) {
-          setIsMouseDown(true);
           setIsDraggingEnd(true);
+        } else if (isWeightSelected) {
+          changeCellWeight(rowIndex, cellIndex, true);
         } else {
-          setIsMouseDown(true);
           changeCellColor(rowIndex, cellIndex);
         }
       }
     };
 
     const handleCellMouseEnter = (rowIndex, cellIndex) => {
-      if (!isVisualizing) {
-        if (isMouseDown && !isDraggingStart && !isDraggingEnd) {
-          changeCellColor(rowIndex, cellIndex);
+      if (
+        isMouseDown &&
+        !isDraggingStart &&
+        !isDraggingEnd &&
+        !isWeightSelected
+      ) {
+        changeCellColor(rowIndex, cellIndex);
+      }
+      if (isDraggingStart || isDraggingEnd) {
+        const newPosition = { row: rowIndex, col: cellIndex };
+
+        if (isDraggingStart) {
+          onStartPositionChange(newPosition);
+        } else {
+          onEndPositionChange(newPosition);
         }
-        if (isDraggingStart || isDraggingEnd) {
-          const newPosition = { row: rowIndex, col: cellIndex };
 
-          if (isDraggingStart) {
-            onStartPositionChange(newPosition);
-          } else {
-            onEndPositionChange(newPosition);
-          }
-
-          if (cellColors[rowIndex]?.[cellIndex] === "#884A39") {
-            changeCellColor(rowIndex, cellIndex);
-          }
+        if (cellColors[rowIndex]?.[cellIndex] === "#884A39") {
+          changeCellColor(rowIndex, cellIndex);
         }
       }
     };
