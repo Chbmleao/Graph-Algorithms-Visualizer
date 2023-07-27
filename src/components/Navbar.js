@@ -5,6 +5,7 @@ import React from "react";
 
 import SelectBox from "./SelectBox";
 import SpeedCounter from "./SpeedCounter";
+import ToggleSwitch from "./ToggleSwitch";
 
 const Navbar = ({
   onResetClick,
@@ -24,6 +25,9 @@ const Navbar = ({
       <ul className="nav-menu">
         <li>
           <SelectBox onAlgorithmSelect={onAlgorithmSelect} />
+        </li>
+        <li>
+          <ToggleSwitch />
         </li>
         <li>
           <button onClick={onVisualizeClick}>Visualize</button>
