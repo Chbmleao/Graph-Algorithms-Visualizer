@@ -108,9 +108,26 @@ class Graph {
     });
   }
 
+  addWeight(verticeCoordinates) {
+    const neighborhood = this.findNeighborhood(verticeCoordinates);
+
+    const verticeId = this.getVerticeIndex(verticeCoordinates);
+    const weight = verticeCoordinates.weight;
+
+    neighborhood.forEach((neighbor) => {
+      this.matrix[neighbor][verticeId] = weight;
+    });
+  }
+
   addWalls(verticesCoordinates) {
-    verticesCoordinates.forEach((item, index) => {
+    verticesCoordinates.forEach((item) => {
       this.addWall(item);
+    });
+  }
+
+  addWeights(verticesCoordinates) {
+    verticesCoordinates.forEach((item) => {
+      this.addWeight(item);
     });
   }
 
