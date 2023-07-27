@@ -48,6 +48,23 @@ function App() {
     }
   };
 
+  const postWeights = async (weightsCoordinates) => {
+    try {
+      const data = {
+        weightsCoordinates,
+      };
+
+      const response = await axios.post(
+        "http://localhost:5000/api/addWeights",
+        data
+      );
+      console.log("Post Weights Response:", response.data);
+    } catch (error) {
+      console.error("Post Weights Error", error);
+      throw error;
+    }
+  };
+
   const handleGraphPathChange = (newGraphPath) => {
     handleClearPathClick();
     setGraphPath(newGraphPath);
@@ -112,7 +129,26 @@ function App() {
       }
     }
 
-    postWalls(wallsCoordinates);
+    await postWalls(wallsCoordinates);
+
+    let weightsCoordinates = [];
+
+    for (let i = 0; i < cellWeights.length; i++) {
+      if (cellWeights[i]) {
+        for (let j = 0; j < cellWeights[i].length; j++) {
+          const weight = cellWeights[i][j];
+          if (weight > 1) {
+            weightsCoordinates.push({
+              row: i,
+              col: j,
+              weight: weight,
+            });
+          }
+        }
+      }
+    }
+
+    await postWeights(weightsCoordinates);
   };
 
   const handleVisualizeClick = () => {
