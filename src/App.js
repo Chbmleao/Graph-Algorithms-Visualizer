@@ -15,6 +15,7 @@ function App() {
   const [algorithmSelected, setAlgorithmSelected] = useState("none");
   const [isVisualizing, setIsVisualizing] = useState(false);
   const [speed, setSpeed] = useState(5);
+  const [weightSelected, setWeightSelected] = useState(false);
   const tableRef = useRef();
 
   const deleteAllWalls = async () => {
@@ -172,6 +173,10 @@ function App() {
     }
   };
 
+  const handleToggleSwitchClick = () => {
+    setWeightSelected(!weightSelected);
+  };
+
   return (
     <div>
       <Navbar
@@ -183,6 +188,7 @@ function App() {
         onSpeedIncrement={handleSpeedIncrement}
         onSpeedDecrement={handleSpeedDecrement}
         onMazeClick={handleMazeClick}
+        onToggleSwitchClick={handleToggleSwitchClick}
       />
       <Table
         cellColors={cellColors}
