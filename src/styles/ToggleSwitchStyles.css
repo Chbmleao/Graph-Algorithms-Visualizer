@@ -1,0 +1,45 @@
+.toggle-switch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 116px;
+  height: 50px;
+  margin: 0 auto;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.5s ease background-color;
+  overflow: hidden;
+}
+
+.toggle-switch.wall {
+  background-color: #522d22;
+}
+
+.toggle-switch.weight {
+  background-color: #4a3988;
+}
+
+.toggle-switch .icon {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: 0.3s ease;
+}
+
+.icon svg {
+  width: 60%;
+  height: auto;
+}
+
+.toggle-switch .icon.wall.unselected {
+  transform: translate(100%, 0);
+  opacity: 0;
+}
+
+.toggle-switch .icon.weight.unselected {
+  transform: translate(-100%, 0);
+  opacity: 0;
+}
