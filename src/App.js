@@ -6,6 +6,7 @@ import Table from "./components/Table";
 
 function App() {
   const [cellColors, setCellColors] = useState([]);
+  const [cellWeights, setCellWeights] = useState([]);
   const [startPosition, setStartPosition] = useState({ row: 0, col: 0 });
   const [endPosition, setEndPosition] = useState({ row: 0, col: 0 });
   const [graphPath, setGraphPath] = useState({
@@ -15,7 +16,7 @@ function App() {
   const [algorithmSelected, setAlgorithmSelected] = useState("none");
   const [isVisualizing, setIsVisualizing] = useState(false);
   const [speed, setSpeed] = useState(5);
-  const [weightSelected, setWeightSelected] = useState(false);
+  const [isWeightSelected, setIsWeightSelected] = useState(false);
   const tableRef = useRef();
 
   const deleteAllWalls = async () => {
@@ -174,7 +175,7 @@ function App() {
   };
 
   const handleToggleSwitchClick = () => {
-    setWeightSelected(!weightSelected);
+    setIsWeightSelected(!isWeightSelected);
   };
 
   return (
@@ -193,6 +194,8 @@ function App() {
       <Table
         cellColors={cellColors}
         setCellColors={setCellColors}
+        cellWeights={cellWeights}
+        setCellWeights={setCellWeights}
         startPosition={startPosition}
         endPosition={endPosition}
         onStartPositionChange={handleStartPositionChange}
@@ -201,6 +204,7 @@ function App() {
         isVisualizing={isVisualizing}
         setIsVisualizing={setIsVisualizing}
         speed={speed}
+        isWeightSelected={isWeightSelected}
         ref={tableRef}
       />
     </div>
