@@ -180,23 +180,25 @@ const Table = forwardRef(
     };
 
     const changeCellWeight = (rowIndex, cellIndex, isIncreasing) => {
-      setCellWeights((prevWeights) => {
-        const updatedWeights = [...prevWeights];
-        updatedWeights[rowIndex] = updatedWeights[rowIndex] || [];
-        if (isIncreasing) {
-          if (updatedWeights[rowIndex][cellIndex]) {
-            updatedWeights[rowIndex][cellIndex] += 1;
+      if (cellColors[rowIndex]?.[cellIndex] !== BROWN_HEX) {
+        setCellWeights((prevWeights) => {
+          const updatedWeights = [...prevWeights];
+          updatedWeights[rowIndex] = updatedWeights[rowIndex] || [];
+          if (isIncreasing) {
+            if (updatedWeights[rowIndex][cellIndex]) {
+              updatedWeights[rowIndex][cellIndex] += 1;
+            } else {
+              updatedWeights[rowIndex][cellIndex] = 2;
+            }
           } else {
-            updatedWeights[rowIndex][cellIndex] = 2;
+            if (updatedWeights[rowIndex][cellIndex] > 1) {
+              updatedWeights[rowIndex][cellIndex] -= 1;
+            }
           }
-        } else {
-          if (updatedWeights[rowIndex][cellIndex] > 1) {
-            updatedWeights[rowIndex][cellIndex] -= 1;
-          }
-        }
 
-        return updatedWeights;
-      });
+          return updatedWeights;
+        });
+      }
     };
 
     const removeCellWeight = (rowIndex, cellIndex) => {
