@@ -180,7 +180,7 @@ class Graph {
       }
 
       for (let i = 0; i < this.numVertices; i++) {
-        if (this.matrix[currentVertice][i] === 1 && !visited[i]) {
+        if (this.matrix[currentVertice][i] >= 1 && !visited[i]) {
           visited[i] = true;
           parents[i] = currentVertice;
           queue.push(i);
