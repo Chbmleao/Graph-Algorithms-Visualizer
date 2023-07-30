@@ -17,6 +17,7 @@ function App() {
   const [isVisualizing, setIsVisualizing] = useState(false);
   const [speed, setSpeed] = useState(5);
   const [isWeightSelected, setIsWeightSelected] = useState(false);
+  const [isAlgWeighted, setIsAlgWeighted] = useState(true);
   const tableRef = useRef();
 
   const deleteAllWalls = async () => {
@@ -93,6 +94,11 @@ function App() {
 
   const handleAlgorithmSelect = (algorithm) => {
     setAlgorithmSelected(algorithm);
+    if (algorithm === "dijkstra") {
+      setIsAlgWeighted(true);
+    } else {
+      setIsAlgWeighted(false);
+    }
   };
 
   const executeAlgorithm = async (route, coordinates) => {
@@ -241,6 +247,7 @@ function App() {
         setIsVisualizing={setIsVisualizing}
         speed={speed}
         isWeightSelected={isWeightSelected}
+        isAlgWeighted={isAlgWeighted}
         ref={tableRef}
       />
     </div>
