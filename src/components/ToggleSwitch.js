@@ -23,7 +23,11 @@ const ToggleSwitch = ({ onToggleSwitchClick, isAlgWeighted }) => {
 
   return (
     <div
-      className={"toggle-switch" + (isWeightSelected ? " weight" : " wall")}
+      className={
+        "toggle-switch" +
+        (isWeightSelected ? " weight" : " wall") +
+        (isAlgWeighted ? "" : " disabled")
+      }
       onClick={handleToggleSwitchClick}
     >
       <div className={"icon wall" + (isWeightSelected ? " unselected" : "")}>
