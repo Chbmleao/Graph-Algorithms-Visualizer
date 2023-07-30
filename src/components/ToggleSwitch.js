@@ -15,8 +15,8 @@ const ToggleSwitch = ({ onToggleSwitchClick, isAlgWeighted }) => {
   };
 
   useEffect(() => {
-    if (!isAlgWeighted) {
-      if (isWeightSelected) setIsWeightSelected(false);
+    if (!isAlgWeighted && isWeightSelected) {
+      setIsWeightSelected(false);
       onToggleSwitchClick();
     }
   }, [isAlgWeighted]);
