@@ -232,6 +232,7 @@ function App() {
         onSpeedDecrement={handleSpeedDecrement}
         onMazeClick={handleMazeClick}
         onToggleSwitchClick={handleToggleSwitchClick}
+        isAlgWeighted={isAlgWeighted}
       />
       <Table
         cellColors={cellColors}
