@@ -8,6 +8,7 @@
   border-radius: 50px;
   cursor: pointer;
   transition: 0.5s ease background-color;
+  transition: 1s ease opacity;
   overflow: hidden;
 }
 
@@ -17,6 +18,11 @@
 
 .toggle-switch.weight {
   background-color: #4a3988;
+}
+
+.toggle-switch.disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
 }
 
 .toggle-switch .icon {
