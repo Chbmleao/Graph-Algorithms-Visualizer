@@ -31,6 +31,7 @@ const Table = forwardRef(
       setIsVisualizing,
       speed,
       isWeightSelected,
+      isAlgWeighted,
     },
     ref
   ) => {
@@ -274,7 +275,7 @@ const Table = forwardRef(
       let icon = "";
       if (isStart || isEnd) {
         icon = <Icon isStart={isStart} />;
-      } else if (hasWeight) {
+      } else if (hasWeight && isAlgWeighted) {
         icon = (
           <div className="weight-icon">
             <TbWeight className="weight-svg" />
