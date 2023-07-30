@@ -17,6 +17,7 @@ const Navbar = ({
   onSpeedDecrement,
   onMazeClick,
   onToggleSwitchClick,
+  isAlgWeighted,
 }) => {
   return (
     <div className="header">
@@ -28,7 +29,10 @@ const Navbar = ({
           <SelectBox onAlgorithmSelect={onAlgorithmSelect} />
         </li>
         <li>
-          <ToggleSwitch onToggleSwitchClick={onToggleSwitchClick} />
+          <ToggleSwitch
+            onToggleSwitchClick={onToggleSwitchClick}
+            isAlgWeighted={isAlgWeighted}
+          />
         </li>
         <li>
           <button onClick={onVisualizeClick}>Visualize</button>
