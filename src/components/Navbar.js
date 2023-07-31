@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import "../styles/NavbarStyles.css";
+import "../styles/colors.css";
 
 import React from "react";
 

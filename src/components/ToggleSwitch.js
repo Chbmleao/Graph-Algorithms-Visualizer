@@ -1,4 +1,5 @@
 import "../styles/ToggleSwitchStyles.css";
+import "../styles/colors.css";
 
 import React, { useState, useEffect } from "react";
 

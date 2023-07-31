@@ -1,4 +1,5 @@
 import "../styles/SelectBoxStyles.css";
+import "../styles/colors.css";
 
 import React from "react";
 
