@@ -1,0 +1,13 @@
+:root {
+  --primary-color-default: #27c44f;
+  --primary-color-light: #67ce81;
+  --primary-color-dark: #0e451c;
+
+  --wall-color: #934af7;
+  --weight-color: #ff1400;
+
+  --icon-color: #934af7;
+
+  --black: #001d00;
+  --white: #ffffff;
+}
