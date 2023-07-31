@@ -1,9 +1,6 @@
 .graph {
   margin: 5vw;
-  border-collapse: collapse;
-  border-spacing: 0;
-  height: 30vh;
-  width: 90vw;
+  border: 3px solid var(--wall-color);
 }
 
 .graph tr {
@@ -15,7 +12,7 @@
   width: calc(96vw / var(--numTableCols));
   height: calc(96vw / var(--numTableCols));
   transition: background-color 0.5s ease, background-position 0.5s ease;
-  border: 3px solid #ffc26f;
+  border: 3px solid var(--black);
   white-space: nowrap;
   display: flex;
   justify-content: center;
@@ -25,7 +22,7 @@
 }
 
 .weight-icon {
-  color: #4a3988;
+  color: var(--weight-color);
   display: flex;
   width: 100%;
   position: relative;

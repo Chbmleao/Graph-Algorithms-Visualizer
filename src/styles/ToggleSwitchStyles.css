@@ -10,14 +10,15 @@
   transition: 0.5s ease background-color;
   transition: 1s ease opacity;
   overflow: hidden;
+  color: white;
 }
 
 .toggle-switch.wall {
-  background-color: #522d22;
+  background-color: var(--wall-color);
 }
 
 .toggle-switch.weight {
-  background-color: #4a3988;
+  background-color: var(--weight-color);
 }
 
 .toggle-switch.disabled {

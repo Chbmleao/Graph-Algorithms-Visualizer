@@ -8,14 +8,14 @@
 }
 
 .start-icon {
-  color: #4a3988;
+  color: var(--icon-color);
   width: 90%;
   height: auto;
   margin: auto;
 }
 
 .end-icon {
-  color: #39884a;
+  color: var(--icon-color);
   width: 80%;
   height: auto;
   margin: auto;
