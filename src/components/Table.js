@@ -10,10 +10,10 @@ import axios from "axios";
 import Icon from "./Icon";
 import { TbWeight } from "react-icons/tb";
 
-const WHITE_HEX = "#FFFFFF";
-const BROWN_HEX = "#884A39";
-const BLUE_HEX = "#397788";
-const YELLOW_HEX = "#FFC300";
+const CELL_COLOR = "#000000";
+const WALL_COLOR = "#934AF7";
+const PATH_COLOR = "#27C44F";
+const MIN_PATH_COLOR = "#FD9E00";
 
 const Table = forwardRef(
   (
@@ -119,7 +119,7 @@ const Table = forwardRef(
             const { row, col } = startToEndPath[index];
 
             updatedColors[row] = updatedColors[row] || [];
-            updatedColors[row][col] = YELLOW_HEX;
+            updatedColors[row][col] = MIN_PATH_COLOR;
             setCellColors(updatedColors);
 
             drawStartToEndPath(index + 1, updatedColors);
@@ -140,7 +140,7 @@ const Table = forwardRef(
             const { row, col } = allPath[index];
 
             updatedColors[row] = updatedColors[row] || [];
-            updatedColors[row][col] = BLUE_HEX;
+            updatedColors[row][col] = PATH_COLOR;
             setCellColors(updatedColors);
 
             drawAllPath(index + 1, updatedColors);
@@ -171,7 +171,7 @@ const Table = forwardRef(
             updatedColors[rowIndex]?.[cellIndex]
           );
 
-          if (updatedColors[rowIndex][cellIndex] === BROWN_HEX) {
+          if (updatedColors[rowIndex][cellIndex] === WALL_COLOR) {
             removeCellWeight(rowIndex, cellIndex);
           }
 
@@ -181,7 +181,7 @@ const Table = forwardRef(
     };
 
     const changeCellWeight = (rowIndex, cellIndex, isIncreasing) => {
-      if (cellColors[rowIndex]?.[cellIndex] !== BROWN_HEX) {
+      if (cellColors[rowIndex]?.[cellIndex] !== WALL_COLOR) {
         setCellWeights((prevWeights) => {
           const updatedWeights = [...prevWeights];
           updatedWeights[rowIndex] = updatedWeights[rowIndex] || [];
@@ -246,7 +246,7 @@ const Table = forwardRef(
           onEndPositionChange(newPosition);
         }
 
-        if (cellColors[rowIndex]?.[cellIndex] === BROWN_HEX) {
+        if (cellColors[rowIndex]?.[cellIndex] === WALL_COLOR) {
           changeCellColor(rowIndex, cellIndex);
         }
       }
@@ -259,12 +259,12 @@ const Table = forwardRef(
     };
 
     const toggleColor = (currentColor) => {
-      return currentColor === BROWN_HEX ? WHITE_HEX : BROWN_HEX;
+      return currentColor === WALL_COLOR ? CELL_COLOR : WALL_COLOR;
     };
 
     const tableCellConstructor = (row, col) => {
       const cellStyle = {
-        backgroundColor: cellColors[row]?.[col] || WHITE_HEX,
+        backgroundColor: cellColors[row]?.[col] || CELL_COLOR,
       };
 
       const hasWeight = cellWeights[row]?.[col] > 1;

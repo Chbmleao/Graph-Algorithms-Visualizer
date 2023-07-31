@@ -4,6 +4,11 @@ import axios from "axios";
 import Navbar from "./components/Navbar";
 import Table from "./components/Table";
 
+const CELL_COLOR = "#000000";
+const WALL_COLOR = "#934AF7";
+const PATH_COLOR = "#27C44F";
+const MIN_PATH_COLOR = "#FD9E00";
+
 function App() {
   const [cellColors, setCellColors] = useState([]);
   const [cellWeights, setCellWeights] = useState([]);
@@ -125,7 +130,7 @@ function App() {
       if (cellColors[i]) {
         for (let j = 0; j < cellColors[i].length; j++) {
           const element = cellColors[i][j];
-          if (element === "#884A39") {
+          if (element === WALL_COLOR) {
             wallsCoordinates.push({
               row: i,
               col: j,
@@ -182,10 +187,10 @@ function App() {
         updatedColors[i] = [];
         for (let j = 0; j < cellColors[i].length; j++) {
           const element = cellColors[i][j];
-          if (element !== "#397788" && element !== "#FFC300") {
+          if (element !== PATH_COLOR && element !== MIN_PATH_COLOR) {
             updatedColors[i][j] = cellColors[i][j];
           } else {
-            updatedColors[i][j] = "#FFFFFF";
+            updatedColors[i][j] = CELL_COLOR;
           }
         }
       } else {
