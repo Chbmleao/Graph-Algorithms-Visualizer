@@ -18,7 +18,7 @@ function App() {
     allPath: [],
     startToEndPath: [],
   });
-  const [algorithmSelected, setAlgorithmSelected] = useState("none");
+  const [algorithmSelected, setAlgorithmSelected] = useState("dijkstra");
   const [isVisualizing, setIsVisualizing] = useState(false);
   const [speed, setSpeed] = useState(5);
   const [isWeightSelected, setIsWeightSelected] = useState(false);
