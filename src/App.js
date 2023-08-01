@@ -93,9 +93,10 @@ function App() {
   const handleResetClick = () => {
     if (!isVisualizing) {
       const updatedColors = [];
+      const updatedWeights = [];
 
       setCellColors(updatedColors);
-      deleteAllWalls();
+      setCellWeights(updatedWeights);
     }
   };
 
