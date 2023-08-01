@@ -3,6 +3,7 @@ import axios from "axios";
 
 import Navbar from "./components/Navbar";
 import Table from "./components/Table";
+import AlgorithmDescription from "./components/AlgorithmDescription";
 
 const CELL_COLOR = "#000000";
 const WALL_COLOR = "#934AF7";
@@ -23,6 +24,7 @@ function App() {
   const [speed, setSpeed] = useState(5);
   const [isWeightSelected, setIsWeightSelected] = useState(false);
   const [isAlgWeighted, setIsAlgWeighted] = useState(true);
+  const [algHasShortPath, setAlgHasShortPath] = useState(true);
   const tableRef = useRef();
 
   const deleteAllWalls = async () => {
@@ -99,11 +101,9 @@ function App() {
 
   const handleAlgorithmSelect = (algorithm) => {
     setAlgorithmSelected(algorithm);
-    if (algorithm === "dijkstra") {
-      setIsAlgWeighted(true);
-    } else {
-      setIsAlgWeighted(false);
-    }
+
+    algorithm === "dijkstra" ? setIsAlgWeighted(true) : setIsAlgWeighted(false);
+    algorithm === "dfs" ? setAlgHasShortPath(false) : setAlgHasShortPath(true);
   };
 
   const executeAlgorithm = async (route, coordinates) => {
@@ -238,6 +238,11 @@ function App() {
         onMazeClick={handleMazeClick}
         onToggleSwitchClick={handleToggleSwitchClick}
         isAlgWeighted={isAlgWeighted}
+      />
+      <AlgorithmDescription
+        algAcronym={algorithmSelected}
+        isWeighted={isAlgWeighted}
+        hasShortPath={algHasShortPath}
       />
       <Table
         cellColors={cellColors}
