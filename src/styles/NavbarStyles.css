@@ -11,8 +11,6 @@ body {
 .logo {
   width: 4rem;
   height: auto;
-  filter: invert(98%) sepia(2%) saturate(414%) hue-rotate(181deg)
-    brightness(117%) contrast(92%);
 }
 
 .header {
