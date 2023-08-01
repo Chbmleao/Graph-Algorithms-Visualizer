@@ -4,7 +4,7 @@ import "../styles/IconStyles.css";
 import { FaAngleRight } from "react-icons/fa6";
 import { FaFlagCheckered } from "react-icons/fa6";
 
-const DraggableIcon = ({ isStart }) => {
+const Icon = ({ isStart }) => {
   if (isStart) {
     return (
       <div className="icon-container">
@@ -20,4 +20,4 @@ const DraggableIcon = ({ isStart }) => {
   }
 };
 
-export default DraggableIcon;
+export default Icon;
