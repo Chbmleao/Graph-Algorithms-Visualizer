@@ -1,0 +1,18 @@
+.alg-description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem;
+}
+
+.alg-description h3 {
+  color: var(--white);
+}
+
+.alg-description .green-text {
+  color: var(--primary-color-default);
+}
+
+.alg-description .red-text {
+  color: var(--weight-color);
+}
