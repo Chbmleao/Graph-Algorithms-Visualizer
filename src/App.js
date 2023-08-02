@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from "./components/Navbar";
 import Table from "./components/Table";
 import AlgorithmDescription from "./components/AlgorithmDescription";
+import TableLegend from "./components/TableLegend";
 
 const CELL_COLOR = "#000000";
 const WALL_COLOR = "#934AF7";
@@ -245,6 +246,7 @@ function App() {
         isWeighted={isAlgWeighted}
         hasShortPath={algHasShortPath}
       />
+      <TableLegend />
       <Table
         cellColors={cellColors}
         setCellColors={setCellColors}
