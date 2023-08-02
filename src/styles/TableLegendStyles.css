@@ -1,0 +1,46 @@
+.table-legend {
+  margin: 0 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.legend-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  gap: 0.5rem;
+}
+
+.legend-icon {
+  width: 1.5rem;
+  height: auto;
+  color: var(--weight-color);
+}
+
+.node {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--black);
+}
+
+.node.unvisited {
+  background-color: black;
+  border: 2px solid var(--white);
+}
+
+.node.visited {
+  background-color: var(--primary-color-default);
+}
+
+.node.shortest-path {
+  background-color: var(--min-path-color);
+}
+
+.node.wall {
+  background-color: var(--wall-color);
+}
