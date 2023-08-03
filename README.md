@@ -5,6 +5,8 @@ A pathfinding algorithm builds on top of a graph search algorithm and explores r
 These algorithms find the cheapest path in terms of the number of hops or weight. Weights can be anything measured, such as time, distance, capacity, or cost.
 In this project, the graph is represented as an adjacency matrix with non-negative weights.
 
+[Path Finding Algorithms Visualizer](./docs//project.gif)
+
 ## Implemented Algorithms
 
 ### Depth First Search (DFS)
