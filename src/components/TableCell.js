@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/TableStyles.css";
+import "../styles/TableCellStyles.css";
 import "../styles/colors.css";
 
 import Icon from "./Icon";
