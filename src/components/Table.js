@@ -7,8 +7,7 @@ import React, {
 import "../styles/TableStyles.css";
 import axios from "axios";
 
-import Icon from "./Icon";
-import { TbWeight } from "react-icons/tb";
+import TableCell from "./TableCell";
 
 const CELL_COLOR = "#000000";
 const WALL_COLOR = "#934AF7";
@@ -267,34 +266,24 @@ const Table = forwardRef(
         backgroundColor: cellColors[row]?.[col] || CELL_COLOR,
       };
 
-      const hasWeight = cellWeights[row]?.[col] > 1;
-
       const isStart = isStartCell(row, col);
       const isEnd = isEndCell(row, col);
 
-      let icon = "";
-      if (isStart || isEnd) {
-        icon = <Icon isStart={isStart} />;
-      } else if (hasWeight && isAlgWeighted) {
-        icon = (
-          <div className="weight-icon">
-            <TbWeight className="weight-svg" />
-            <h4 className="weight-number">{cellWeights[row]?.[col]}</h4>
-          </div>
-        );
-      }
+      const hasWeight = cellWeights[row]?.[col] > 1 && isAlgWeighted;
+      const weight = hasWeight ? cellWeights[row][col] : 1;
+
       return (
-        <td
-          data-row={row}
-          data-col={col}
-          key={col}
-          style={cellStyle}
-          onMouseDown={() => handleCellMouseDown(row, col)}
-          onMouseEnter={() => handleCellMouseEnter(row, col)}
-          onMouseUp={handleCellMouseUp}
-        >
-          {icon}
-        </td>
+        <TableCell
+          row={row}
+          col={col}
+          cellStyle={cellStyle}
+          isStart={isStart}
+          isEnd={isEnd}
+          weight={weight}
+          handleCellMouseDown={handleCellMouseDown}
+          handleCellMouseEnter={handleCellMouseEnter}
+          handleCellMouseUp={handleCellMouseUp}
+        />
       );
     };
 
