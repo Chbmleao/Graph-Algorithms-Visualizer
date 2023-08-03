@@ -1,70 +1,22 @@
-# Getting Started with Create React App
+# Path Finding Algorithms Visualizer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a project that provides an interface to visualize the functionality of some path finding algorithms.
+A path finding build on top of a graph search algorithm and explore routes between nodes, starting at one node and traversing through relationships until the destinantion has been reached.
+These algorithms find the cheapest path in terms of the number of hops or weight.
+Weights can be anything measured, such as time, distance, capacity or cost.
+The following sections briefly explain the implemented algorithms in this project.
 
-## Available Scripts
+## Depth First Search (DFS)
 
-In the project directory, you can run:
+Depth first search is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root nod and explores as far as possible along each branch before backtracking. Extra memory, a stack, is needed to keep track of the nodes discovered so far along a specified branch which helps in backtracking of the graph. This algorithm does not guarantee the shortest path from one node to another and it isn't weighted.
+[More about DFS](https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/)
 
-### `npm start`
+## Breadth First Search (BFS)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The Breadth first search algorithm is used to search a graph data structure. Starting from the root, all the nodes at a particular level are visited first and then the nodes of the next level are traversed till all the nodes are visited. To do this, a queue is used. All the adjacent unvisited nodes of the current level are pushed into the queue and the nodes of the current level are marked visited and popped from the queue. This algorithm guarantees the shortest path from one node to another and it isn't weighted.
+[More about BFS](https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Dijkstra
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Dijkstra's algorithm is a popular algorithm for solving many single-source shortest path problems having non-negative edge weight in the graphs. The algorithm maintains a set of visited vertices and a set of unvisited vertices. It starts at the source vertex and iteratively selects the unvisited vertex with the smallest tentative distance from the source. It the visits the neighbors of this vertex and updates their tentative distances if a shorter path is found. This process continues until the destination vertex is reached, or all reachable vertices have been visited. This algorithm guarantees the shortest path from one node to another and it is weighted.
+[More about Dijkstra](https://www.geeksforgeeks.org/introduction-to-dijkstras-shortest-path-algorithm/)
