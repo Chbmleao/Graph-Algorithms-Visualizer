@@ -24,3 +24,30 @@ The Breadth First Search algorithm is used to search a graph data structure. It 
 Dijkstra's algorithm is a popular algorithm for finding the shortest path from a single source to all other nodes in a graph with non-negative edge weights. The algorithm maintains a set of visited vertices and a set of unvisited vertices. It starts at the source vertex and iteratively selects the unvisited vertex with the smallest tentative distance from the source. Then, it visits the neighbors of this vertex and updates their tentative distances if a shorter path is found. This process continues until the destination vertex is reached, or all reachable vertices have been visited. This algorithm guarantees the shortest path from one node to another, and it is weighted.
 
 [Learn more about Dijkstra](https://www.geeksforgeeks.org/introduction-to-dijkstras-shortest-path-algorithm/)
+
+## Installation and Usage Instructions
+
+### 1. Clone the repository:
+
+```bash
+git clone https://github.com/Chbmleao/Graph-Algorithms-Visualizer
+cd Graph-Algorithms-Visualizer
+```
+
+### 2. Clone dependencies:
+
+This project has only frontend dependencies, since backend uses pure javascript. Run the following commands to install:
+
+```bash
+npm install
+```
+
+### 3. Start the project:
+
+To start frontend and backend server, run the following command:
+
+```bash
+npm start
+```
+
+This will launch the server using `nodemon`, which will automatically restart the server whenever you make changes to the backend code. That also will start the development server for the frontend, and you can access the application in your browser at `http://localhost:3000`.
