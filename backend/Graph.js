@@ -246,7 +246,8 @@ class Graph {
         minIndex = v;
       }
     }
-    return minIndex;
+
+    return min === Number.MAX_VALUE ? -1 : minIndex;
   }
 
   dijkstra(start, end) {
@@ -261,6 +262,9 @@ class Graph {
 
     for (let count = 0; count < this.numVertices - 1; count++) {
       let u = this.minDistance(dist, sptSet);
+      if (u === -1) {
+        break;
+      }
       sptSet[u] = true;
       allPath.push(u);
 
@@ -286,6 +290,8 @@ class Graph {
       startToEndPath.unshift(currentVertex);
       currentVertex = parent[currentVertex];
     }
+
+    if (startToEndPath.length === 1) startToEndPath = [];
 
     const path = this.getReturnPathCoordinates(allPath, startToEndPath);
     return path;
