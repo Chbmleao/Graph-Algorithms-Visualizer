@@ -6,24 +6,18 @@ class GraphService {
   }
 
   removeAllWalls() {
-    console.log("remove all walls");
     this.graph.removeAllWalls();
   }
 
   addWalls(wallCoordinates) {
-    console.log("add walls", wallCoordinates);
     this.graph.addWalls(wallCoordinates);
   }
 
   addWeights(weightsCoordinates) {
-    console.log("add weights", weightsCoordinates);
     this.graph.addWeights(weightsCoordinates);
   }
 
   executeAlgorithm(algName, coordinates) {
-    console.log("execute algorithm");
-    console.log("alg name:", algName);
-    console.log("coordinates:", coordinates);
     const { startCoordinates, endCoordinates } = coordinates;
 
     const startIndex = this.graph.getVerticeIndex(startCoordinates);
