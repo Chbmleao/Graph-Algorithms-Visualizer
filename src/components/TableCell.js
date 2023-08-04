@@ -30,9 +30,7 @@ const TableCell = ({
 
   return (
     <td
-      data-row={row}
-      data-col={col}
-      key={col}
+      key={row * 40 + col}
       style={cellStyle}
       onMouseDown={() => handleCellMouseDown(row, col)}
       onMouseEnter={() => handleCellMouseEnter(row, col)}
