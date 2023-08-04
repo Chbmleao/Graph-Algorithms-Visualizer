@@ -1,10 +1,11 @@
-import React, { useState, useRef } from "react";
-import axios from "axios";
+import React, { useState, useRef, useEffect } from "react";
 
 import Navbar from "./components/Navbar";
 import Table from "./components/Table";
 import AlgorithmDescription from "./components/AlgorithmDescription";
 import TableLegend from "./components/TableLegend";
+
+import GraphService from "./service/Graph";
 
 const CELL_COLOR = "#000000";
 const WALL_COLOR = "#934AF7";
@@ -12,6 +13,7 @@ const PATH_COLOR = "#27C44F";
 const MIN_PATH_COLOR = "#FD9E00";
 
 function App() {
+  const [graphService, setGraphService] = useState(null);
   const [cellColors, setCellColors] = useState([]);
   const [cellWeights, setCellWeights] = useState([]);
   const [startPosition, setStartPosition] = useState({ row: 0, col: 0 });
@@ -28,50 +30,37 @@ function App() {
   const [algHasShortPath, setAlgHasShortPath] = useState(true);
   const tableRef = useRef();
 
-  const deleteAllWalls = async () => {
-    try {
-      const response = await axios.delete(
-        "http://localhost:5000/api/removeAllWalls"
-      );
-      console.log("Delete All Walls Response:", response.data);
-    } catch (error) {
-      console.error("Delete All Walls Error", error);
-      throw error;
-    }
+  const tableSize = {
+    numTableRows: 19,
+    numTableCols: 40,
   };
 
-  const postWalls = async (wallsCoordinates) => {
-    try {
-      const data = {
-        wallsCoordinates,
-      };
+  useEffect(() => {
+    const numTableRows = tableSize.numTableRows;
+    const numTableCols = tableSize.numTableCols;
 
-      const response = await axios.post(
-        "http://localhost:5000/api/addWalls",
-        data
-      );
-      console.log("Post Walls Response:", response.data);
-    } catch (error) {
-      console.error("Post Wall Error", error);
-      throw error;
-    }
+    setStartPosition({
+      row: Math.floor(numTableRows / 2),
+      col: Math.floor(numTableCols / 10),
+    });
+    setEndPosition({
+      row: Math.floor(numTableRows / 2),
+      col: Math.floor((numTableCols / 10) * 9 - 1),
+    });
+
+    setGraphService(new GraphService(numTableRows, numTableCols));
+  }, [tableSize.numTableRows, tableSize.numTableCols]);
+
+  const deleteAllWalls = () => {
+    graphService.removeAllWalls();
   };
 
-  const postWeights = async (weightsCoordinates) => {
-    try {
-      const data = {
-        weightsCoordinates,
-      };
+  const postWalls = (wallsCoordinates) => {
+    graphService.addWalls(wallsCoordinates);
+  };
 
-      const response = await axios.post(
-        "http://localhost:5000/api/addWeights",
-        data
-      );
-      console.log("Post Weights Response:", response.data);
-    } catch (error) {
-      console.error("Post Weights Error", error);
-      throw error;
-    }
+  const postWeights = (weightsCoordinates) => {
+    graphService.addWeights(weightsCoordinates);
   };
 
   const handleGraphPathChange = (newGraphPath) => {
@@ -108,24 +97,15 @@ function App() {
     algorithm === "dfs" ? setAlgHasShortPath(false) : setAlgHasShortPath(true);
   };
 
-  const executeAlgorithm = async (route, coordinates) => {
-    try {
-      await equalityGraphTable();
+  const executeAlgorithm = (algName, coordinates) => {
+    equalityGraphTable();
 
-      const data = {
-        coordinates,
-      };
-      const response = await axios.post(route, data);
-      console.log("Execute Algorithm Response:", response.data.message);
-      handleGraphPathChange(response.data.path);
-    } catch (error) {
-      console.error("Execute Algorithm Error", error);
-      throw error;
-    }
+    const path = graphService.executeAlgorithm(algName, coordinates);
+    handleGraphPathChange(path);
   };
 
-  const equalityGraphTable = async () => {
-    await deleteAllWalls();
+  const equalityGraphTable = () => {
+    deleteAllWalls();
     let wallsCoordinates = [];
 
     for (let i = 0; i < cellColors.length; i++) {
@@ -142,7 +122,7 @@ function App() {
       }
     }
 
-    await postWalls(wallsCoordinates);
+    postWalls(wallsCoordinates);
 
     let weightsCoordinates = [];
 
@@ -161,7 +141,7 @@ function App() {
       }
     }
 
-    await postWeights(weightsCoordinates);
+    postWeights(weightsCoordinates);
   };
 
   const handleVisualizeClick = () => {
@@ -173,11 +153,7 @@ function App() {
     if (!isVisualizing) {
       setIsVisualizing(true);
 
-      if (algorithmSelected !== "none") {
-        const route =
-          "http://localhost:5000/api/algorithm/" + algorithmSelected;
-        executeAlgorithm(route, coordinates);
-      }
+      executeAlgorithm(algorithmSelected, coordinates);
     }
   };
 
@@ -217,7 +193,7 @@ function App() {
     }
   };
 
-  const handleMazeClick = async () => {
+  const handleMazeClick = () => {
     if (!isVisualizing) {
       tableRef.current.createRandomMaze();
     }
@@ -248,6 +224,7 @@ function App() {
       />
       <TableLegend />
       <Table
+        tableSize={tableSize}
         cellColors={cellColors}
         setCellColors={setCellColors}
         cellWeights={cellWeights}
