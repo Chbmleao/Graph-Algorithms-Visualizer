@@ -5,7 +5,6 @@ import React, {
   useImperativeHandle,
 } from "react";
 import "../styles/TableStyles.css";
-import axios from "axios";
 
 import TableCell from "./TableCell";
 
@@ -17,6 +16,7 @@ const MIN_PATH_COLOR = "#FD9E00";
 const Table = forwardRef(
   (
     {
+      tableSize,
       cellColors,
       setCellColors,
       cellWeights,
@@ -34,39 +34,15 @@ const Table = forwardRef(
     },
     ref
   ) => {
-    const [numTableRows, setNumTableRows] = useState(0);
-    const [numTableCols, setNumTableCols] = useState(0);
-    const [tableStyle, setTableStyle] = useState({
-      "--numTableRows": 20,
-      "--numTableCols": 30,
-    });
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [isDraggingStart, setIsDraggingStart] = useState(false);
     const [isDraggingEnd, setIsDraggingEnd] = useState(false);
 
-    const getTableSize = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/tableSize");
-        const tableSize = response.data;
-        console.log("Table Size:", tableSize);
-        setNumTableRows(tableSize.numTableRows);
-        setNumTableCols(tableSize.numTableCols);
-        onStartPositionChange({
-          row: Math.floor(tableSize.numTableRows / 2),
-          col: Math.floor(tableSize.numTableCols / 10),
-        });
-        onEndPositionChange({
-          row: Math.floor(tableSize.numTableRows / 2),
-          col: Math.floor((tableSize.numTableCols / 10) * 9 - 1),
-        });
-        setTableStyle({
-          "--numTableRows": tableSize.numTableRows,
-          "--numTableCols": tableSize.numTableCols,
-        });
-      } catch (error) {
-        console.error(error);
-        throw error;
-      }
+    const { numTableRows, numTableCols } = tableSize;
+
+    const tableStyle = {
+      "--numTableRows": numTableRows,
+      "--numTableCols": numTableCols,
     };
 
     const createRandomMaze = () => {
@@ -90,11 +66,6 @@ const Table = forwardRef(
     useImperativeHandle(ref, () => ({
       createRandomMaze,
     }));
-
-    useEffect(() => {
-      getTableSize();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const getTimeoutValue = () => {
       const maxValue = 50;
