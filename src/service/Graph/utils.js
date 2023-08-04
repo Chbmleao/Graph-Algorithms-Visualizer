@@ -322,4 +322,4 @@ class Graph {
   }
 }
 
-module.exports = Graph;
+export default Graph;
