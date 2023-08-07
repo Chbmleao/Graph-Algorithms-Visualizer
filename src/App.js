@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Table from "./components/Table";
 import AlgorithmDescription from "./components/AlgorithmDescription";
 import TableLegend from "./components/TableLegend";
+import Footer from "./components/Footer";
 
 import GraphService from "./service/Graph";
 
@@ -241,6 +242,7 @@ function App() {
         isAlgWeighted={isAlgWeighted}
         ref={tableRef}
       />
+      <Footer />
     </div>
   );
 }
