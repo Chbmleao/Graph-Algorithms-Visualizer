@@ -8,6 +8,8 @@ import SelectBox from "./SelectBox";
 import SpeedCounter from "./SpeedCounter";
 import ToggleSwitch from "./ToggleSwitch";
 
+import { FaGithub } from "react-icons/fa";
+
 const Navbar = ({
   onResetClick,
   onClearPathClick,
@@ -24,6 +26,12 @@ const Navbar = ({
     <div className="header">
       <Link to="/">
         <img src="logo.svg" alt="Graph logo" className="logo" />
+      </Link>
+      <Link
+        to="https://github.com/Chbmleao/Graph-Algorithms-Visualizer"
+        target="_blank"
+      >
+        <FaGithub className="github-icon" />
       </Link>
       <ul className="nav-menu">
         <li>
