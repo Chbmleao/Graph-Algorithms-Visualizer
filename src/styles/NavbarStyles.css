@@ -1,6 +1,12 @@
 .logo {
-  width: 4rem;
+  width: 3rem;
   height: auto;
+}
+
+.github-icon {
+  width: 2.5rem;
+  height: auto;
+  color: black;
 }
 
 .header {
