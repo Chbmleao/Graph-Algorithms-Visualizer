@@ -24,15 +24,17 @@ const Navbar = ({
 }) => {
   return (
     <div className="header">
-      <Link to="/">
-        <img src="logo.svg" alt="Graph logo" className="logo" />
-      </Link>
-      <Link
-        to="https://github.com/Chbmleao/Graph-Algorithms-Visualizer"
-        target="_blank"
-      >
-        <FaGithub className="github-icon" />
-      </Link>
+      <div className="header-links">
+        <Link to="/">
+          <img src="logo.svg" alt="Graph logo" className="logo" />
+        </Link>
+        <Link
+          to="https://github.com/Chbmleao/Graph-Algorithms-Visualizer"
+          target="_blank"
+        >
+          <FaGithub className="github-icon" />
+        </Link>
+      </div>
       <ul className="nav-menu">
         <li>
           <SelectBox onAlgorithmSelect={onAlgorithmSelect} />
