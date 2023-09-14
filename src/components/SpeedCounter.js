@@ -10,7 +10,7 @@ const SpeedCounter = ({ speed, onSpeedIncrement, onSpeedDecrement }) => {
   };
 
   return (
-    <div className="speed-counter">
+    <div data-testid="speed-counter" className="speed-counter">
       <h2>Speed</h2>
       <div className="quantity">
         <div className="increment-count" onClick={onSpeedIncrement}>

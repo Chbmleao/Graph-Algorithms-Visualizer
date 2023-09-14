@@ -24,6 +24,7 @@ const ToggleSwitch = ({ onToggleSwitchClick, isAlgWeighted }) => {
 
   return (
     <div
+      data-testid="toggle-switch"
       className={
         "toggle-switch" +
         (isWeightSelected ? " weight" : " wall") +
