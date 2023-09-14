@@ -28,12 +28,13 @@ const Navbar = ({
         <Link to="/">
           <img src="logo.svg" alt="Graph logo" className="logo" />
         </Link>
-        <Link
-          to="https://github.com/Chbmleao/Graph-Algorithms-Visualizer"
+        <a
+          href="https://github.com/Chbmleao/Graph-Algorithms-Visualizer"
           target="_blank"
+          rel="noopener noreferrer"
         >
           <FaGithub className="github-icon" />
-        </Link>
+        </a>
       </div>
       <ul className="nav-menu">
         <li>
