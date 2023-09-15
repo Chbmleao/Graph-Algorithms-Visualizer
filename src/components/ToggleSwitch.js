@@ -20,7 +20,7 @@ const ToggleSwitch = ({ onToggleSwitchClick, isAlgWeighted }) => {
       setIsWeightSelected(false);
       onToggleSwitchClick();
     }
-  }, [isAlgWeighted]);
+  }, [isAlgWeighted, isWeightSelected, onToggleSwitchClick]);
 
   return (
     <div
