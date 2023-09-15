@@ -26,7 +26,6 @@ describe("Navbar", () => {
     renderComponent();
 
     expect(screen.getByAltText("Graph logo")).toBeInTheDocument();
-
     expect(screen.getByTestId("select-box")).toBeInTheDocument();
     expect(screen.getByTestId("toggle-switch")).toBeInTheDocument();
     expect(screen.getByText("Visualize")).toBeInTheDocument();
