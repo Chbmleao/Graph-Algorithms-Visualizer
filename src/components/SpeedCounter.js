@@ -13,11 +13,19 @@ const SpeedCounter = ({ speed, onSpeedIncrement, onSpeedDecrement }) => {
     <div data-testid="speed-counter" className="speed-counter">
       <h2>Speed</h2>
       <div className="quantity">
-        <div className="increment-count" onClick={onSpeedIncrement}>
+        <div
+          data-testid="increment-count"
+          className="increment-count"
+          onClick={onSpeedIncrement}
+        >
           <FaAngleUp />
         </div>
         <div className="total-count">{formatSpeed(speed)}</div>
-        <div className="decrement-count" onClick={onSpeedDecrement}>
+        <div
+          data-testid="decrement-count"
+          className="decrement-count"
+          onClick={onSpeedDecrement}
+        >
           <FaAngleDown />
         </div>
       </div>
