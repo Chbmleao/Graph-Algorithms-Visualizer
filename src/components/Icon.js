@@ -8,13 +8,13 @@ const Icon = ({ isStart }) => {
   if (isStart) {
     return (
       <div className="icon-container">
-        <FaAngleRight className="start-icon" />
+        <FaAngleRight data-testid="start-icon" className="start-icon" />
       </div>
     );
   } else {
     return (
       <div className="icon-container">
-        <FaFlagCheckered className="end-icon" />
+        <FaFlagCheckered data-testid="end-icon" className="end-icon" />
       </div>
     );
   }
