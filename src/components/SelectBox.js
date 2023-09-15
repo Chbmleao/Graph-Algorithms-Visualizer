@@ -11,7 +11,11 @@ const SelectBox = ({ onAlgorithmSelect }) => {
 
   return (
     <div data-testid="select-box" className="select">
-      <select name="algorithms" onChange={handleAlgorithmChange}>
+      <select
+        data-testid="algorithms"
+        name="algorithms"
+        onChange={handleAlgorithmChange}
+      >
         <option value="dijkstra">Dijkstra</option>
         <option value="bfs">Breadth-first search (BFS)</option>
         <option value="dfs">Depth-first search (DFS)</option>
